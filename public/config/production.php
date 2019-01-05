@@ -8,8 +8,13 @@ defined('IN_PLAB') OR exit('No direct script access allowed');
  *
  * This folder contains all source files that are hidden from
  * public access.
+ *
+ * Set the path to the source files from the path of same directory
+ * that houses index.php (FCPATH).
+ *
+ * NO TRAILING SLASH!
  */
- $source_path = 'system';
+ $source_path = '../';
 
 /*
  *---------------------------------------------------------------
@@ -19,7 +24,7 @@ defined('IN_PLAB') OR exit('No direct script access allowed');
  * This variable must contain the name of your "system" directory.
  * Set the path if it is not in the same directory as this file.
  */
-	$system_path = 'system';
+	$system_path = 'core/system';
 
 /*
  *---------------------------------------------------------------
@@ -36,7 +41,7 @@ defined('IN_PLAB') OR exit('No direct script access allowed');
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = 'application';
+	$application_folder = 'core/package/plab/core';
 
 /*
  *---------------------------------------------------------------
