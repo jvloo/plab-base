@@ -74,16 +74,20 @@ require_once './config/'.ENVIRONMENT.'.php';
  *  Add source path to all path/folder variables
  *---------------------------------------------------------------
  */
-if ( ! empty($system_path)) {
-	$system_path = $source_path.DIRECTORY_SEPARATOR.$system_path;
-}
+if ( ! empty($source_path)) {
 
-if ( ! empty($application_folder)) {
-	$application_folder = $source_path.DIRECTORY_SEPARATOR.$application_folder;
-}
+	if ( ! empty($system_path)) {
+		$system_path = $source_path.DIRECTORY_SEPARATOR.$system_path;
+	}
 
-if ( ! empty($view_folder)) {
-	$view_folder = $source_path.DIRECTORY_SEPARATOR.$view_folder;
+	if ( ! empty($application_folder)) {
+		$application_folder = $source_path.DIRECTORY_SEPARATOR.$application_folder;
+	}
+
+	if ( ! empty($view_folder)) {
+		$view_folder = $source_path.DIRECTORY_SEPARATOR.$view_folder;
+	}
+
 }
 
 
