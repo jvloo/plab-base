@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -35,7 +34,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +99,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = true;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,7 +113,7 @@ $config['enable_hooks'] = FALSE;
 | https://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'MY_';
+$config['subclass_prefix'] = 'Plab_';
 
 /*
 |--------------------------------------------------------------------------
@@ -136,7 +135,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = ROOTPATH.'core/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -182,7 +181,7 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 | use segment based URLs.
 |
 */
-$config['enable_query_strings'] = FALSE;
+$config['enable_query_strings'] = false;
 $config['controller_trigger'] = 'c';
 $config['function_trigger'] = 'm';
 $config['directory_trigger'] = 'd';
@@ -199,7 +198,7 @@ $config['directory_trigger'] = 'd';
 |          for backwards compatibility purposes!
 |
 */
-$config['allow_get_array'] = TRUE;
+$config['allow_get_array'] = true;
 
 /*
 |--------------------------------------------------------------------------
@@ -234,7 +233,7 @@ $config['log_threshold'] = 0;
 | application/logs/ directory. Use a full server path with trailing slash.
 |
 */
-$config['log_path'] = '';
+$config['log_path'] = ROOTPATH.'content/logs/';
 
 /*
 |--------------------------------------------------------------------------
@@ -293,7 +292,7 @@ $config['error_views_path'] = '';
 | application/cache/ directory.  Use a full server path with trailing slash.
 |
 */
-$config['cache_path'] = '';
+$config['cache_path'] = ROOTPATH.'content/cache/';
 
 /*
 |--------------------------------------------------------------------------
@@ -311,7 +310,7 @@ $config['cache_path'] = '';
 |	             of query parameters.
 |
 */
-$config['cache_query_string'] = FALSE;
+$config['cache_query_string'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -325,6 +324,7 @@ $config['cache_query_string'] = FALSE;
 |
 */
 $config['encryption_key'] = '';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -378,12 +378,30 @@ $config['encryption_key'] = '';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'ci_session';
+$config['sess_cookie_name'] = 'plab_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
-$config['sess_match_ip'] = FALSE;
+$config['sess_match_ip'] = false;
 $config['sess_time_to_update'] = 300;
-$config['sess_regenerate_destroy'] = FALSE;
+$config['sess_regenerate_destroy'] = false;
+
+/*
+|--------------------------------------------------------------------------
+| Session Save Path
+|--------------------------------------------------------------------------
+*/
+switch ($config['sess_driver']) {
+  case 'files':
+    $config['sess_save_path'] = ROOTPATH.'content/session/';
+    break;
+
+  case 'database':
+    $config['sess_save_path'] = 'app_session';
+    break;
+
+  default:
+    $config['sess_save_path'] = 'null';
+    break;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -400,11 +418,11 @@ $config['sess_regenerate_destroy'] = FALSE;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
+$config['cookie_prefix']	= 'plab_';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+$config['cookie_secure']	= false;
+$config['cookie_httponly'] 	= false;
 
 /*
 |--------------------------------------------------------------------------
@@ -418,7 +436,7 @@ $config['cookie_httponly'] 	= FALSE;
 |          for backwards compatibility purposes!
 |
 */
-$config['standardize_newlines'] = FALSE;
+$config['standardize_newlines'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -432,7 +450,7 @@ $config['standardize_newlines'] = FALSE;
 |          for backwards compatibility purposes!
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -448,11 +466,11 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_regenerate' = Regenerate token on every submission
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
-$config['csrf_protection'] = FALSE;
-$config['csrf_token_name'] = 'csrf_test_name';
-$config['csrf_cookie_name'] = 'csrf_cookie_name';
+$config['csrf_protection'] = false;
+$config['csrf_token_name'] = 'plab_CSRFToken';
+$config['csrf_cookie_name'] = 'plab_CSRF';
 $config['csrf_expire'] = 7200;
-$config['csrf_regenerate'] = TRUE;
+$config['csrf_regenerate'] = true;
 $config['csrf_exclude_uris'] = array();
 
 /*
@@ -475,7 +493,7 @@ $config['csrf_exclude_uris'] = array();
 | by the output class.  Do not 'echo' any values with compression enabled.
 |
 */
-$config['compress_output'] = FALSE;
+$config['compress_output'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -488,7 +506,7 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'local';
+$config['time_reference'] = 'UP8';
 
 /*
 |--------------------------------------------------------------------------
@@ -502,7 +520,7 @@ $config['time_reference'] = 'local';
 | Note: You need to have eval() enabled for this to work.
 |
 */
-$config['rewrite_short_tags'] = FALSE;
+$config['rewrite_short_tags'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -521,3 +539,47 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+/*
+|--------------------------------------------------------------------------
+| Modules locations
+|--------------------------------------------------------------------------
+|
+| These are the folders where your modules are located. You may define an
+| absolute path to the location or a relative path starting from the root
+| directory.
+|
+*/
+$config['modules_locations'] = [
+  APPPATH.'modules',
+  MODPATH
+];
+
+/*
+| -------------------------------------------------------------------------
+| Native spl_autoload_register() - by Kenneth Vogt
+| -------------------------------------------------------------------------
+|
+| Here is an updated version of Phil Sturgeon’s code:
+|
+| Thanks to Phil Sturgeon Kenneth Vogt and InsiteFX.
+|
+| NOTE:
+| Requires PHP 5.3.+
+| As of CI 3.0 Dev - The constant EXT has been removed modified
+| to use '.php' now instead of EXT.
+| should work for all version of CI and PHP 5.3
+|
+| Place at the bottom of your ./application/config/config.php file.
+| -------------------------------------------------------------------------
+*/
+spl_autoload_register(function($class) {
+  if (strpos($class, 'CI_') !== 0) {
+    if (file_exists($file = APPPATH.'core/'.$class.'.php')) {
+      include $file;
+
+    } elseif (file_exists($file = APPPATH.'libraries/'.$class.'.php')) {
+      include $file;
+    }
+  }
+});
