@@ -52,167 +52,109 @@
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
 // --------------------------------------------------------------------
 
-/*
- *---------------------------------------------------------------
- * SECURITY CHECK CONSTANT
- *---------------------------------------------------------------
+/**
+ * Resolve Path Function
+ *
+ * @param  string       $path      [description]
+ * @param  string       $path_name [description]
+ * @return string       [description]
+ */
+function resolve_path($path, $path_name) {
+	// Check if the path exists
+	if ( ! is_dir($path)) {
+		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+		echo 'Your '.$path_name.' path does not appear to be set correctly.';
+
+		exit(3);
+	}
+
+	// Resolve the path
+	if (($_temp = realpath($path)) !== false) {
+		$path = $_temp.DS;
+	} else {
+		// Ensure there's a trailing slash
+		$path = strtr(rtrim($path, '/\\'), '/\\', DS.DS).DS;
+	}
+
+	return $path;
+}
+
+/**
+ * Plab Container
  *
  * Serving the same purpose for defined('BASEPATH') in all
  * Codeigniter source files.
  */
-	define('IN_PLAB', true);
+define('IN_PLAB', true);
 
-/*
- *---------------------------------------------------------------
- * LOAD THE ENVIRONMENT CONFIG FILE
- *---------------------------------------------------------------
+/**
+ * Set the current directory correctly for CLI requests
+ */
+	if (defined('STDIN')) {
+		chdir(dirname(__FILE__));
+	}
+
+/**
+ * Load the system config file
  */
 	require_once './config/'.ENVIRONMENT.'.php';
 
-/*
- *---------------------------------------------------------------
- *  Resolve the source path and add to all path/folder variables
- *---------------------------------------------------------------
+//------------------------------------------------------------------------------
+// DEFINE SOME USEFUL CONSTANTS
+//------------------------------------------------------------------------------
+
+/**
+ * Directory Separator Abbreviation
  */
-	// Is the source path correct?
-	if ( ! is_dir($source_path)) {
-	 header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-		 echo 'Your source folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
+define('DS', DIRECTORY_SEPARATOR);
 
-		 exit(3); // EXIT_CONFIG
-	}
-
-	// Ensure there's a trailing slash
-  $source_path = strtr(
-  	rtrim($source_path, '/\\'),
-  	'/\\',
-  	DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-  ).DIRECTORY_SEPARATOR;
-
-  // Path to the source file directory
-  define('SRCPATH', $source_path);
-
-  $system_path = SRCPATH.$system_path;
-  $application_folder = SRCPATH.$application_folder;
-
-  if ( ! empty($view_folder)) {
-		$view_folder = SRCPATH.$view_folder;
-  }
-
-
-/*
- * ---------------------------------------------------------------
- *  Resolve the system path for increased reliability
- * ---------------------------------------------------------------
+/**
+ * The Name of THIS File
  */
-	// Set the current directory correctly for CLI requests
-	if (defined('STDIN')) {
-	 chdir(dirname(__FILE__));
-	}
+define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
-	if (($_temp = realpath($system_path)) !== false) {
-	 $system_path = $_temp.DIRECTORY_SEPARATOR;
-
-	} else {
-	 // Ensure there's a trailing slash
-	 $system_path = strtr(
-		 rtrim($system_path, '/\\'),
-		 '/\\',
-		 DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-	 ).DIRECTORY_SEPARATOR;
-	}
-
-	// Is the system path correct?
-  if ( ! is_dir($system_path)) {
-  	header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-  	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
-
-  	exit(3); // EXIT_CONFIG
-  }
-
-/*
- * -------------------------------------------------------------------
- *  Now that we know the path, set the main path constants
- * -------------------------------------------------------------------
+/**
+ * Path to the front controller (this file) directory
  */
-	// The name of THIS file
-	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+define('FCPATH', dirname(__FILE__).DS);
 
-	// Path to the system directory
-	define('BASEPATH', $system_path);
-
-	// Path to the front controller (this file) directory
-	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
-
-	// Name of the "system" directory
-	define('SYSDIR', basename(BASEPATH));
-
-	// The path to the "application" directory
-	if (is_dir($application_folder)) {
-
-		if (($_temp = realpath($application_folder)) !== false) {
-			$application_folder = $_temp;
-
-		} else {
-			$application_folder = strtr(
-				rtrim($application_folder, '/\\'),
-				'/\\',
-				DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-			);
-		}
-
-	} elseif (is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR)) {
-		$application_folder = BASEPATH.strtr(
-			trim($application_folder, '/\\'),
-			'/\\',
-			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-		);
-
-	} else {
-		header('HTTP/1.1 503 Service Unavailable.', true, 503);
-		echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.SELF;
-
-		exit(3); // EXIT_CONFIG
-	}
-
-	define('APPPATH', $application_folder.DIRECTORY_SEPARATOR);
-
-	// The path to the "views" directory
-	if ( ! isset($view_folder[0]) && is_dir(APPPATH.'views'.DIRECTORY_SEPARATOR)) {
-		$view_folder = APPPATH.'views';
-
-	} elseif (is_dir($view_folder)) {
-
-		if (($_temp = realpath($view_folder)) !== false) {
-			$view_folder = $_temp;
-
-		} else {
-			$view_folder = strtr(
-				rtrim($view_folder, '/\\'),
-				'/\\',
-				DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-			);
-		}
-
-	} elseif (is_dir(APPPATH.$view_folder.DIRECTORY_SEPARATOR)) {
-		$view_folder = APPPATH.strtr(
-			trim($view_folder, '/\\'),
-			'/\\',
-			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
-		);
-
-	} else {
-		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-		echo 'Your view folder path does not appear to be set correctly. Please open the following file and correct this: '.SELF;
-
-		exit(3); // EXIT_CONFIG
-	}
-
-	define('VIEWPATH', $view_folder.DIRECTORY_SEPARATOR);
-
-/*
- * --------------------------------------------------------------------
- * LOAD THE BOOTSTRAP FILE
- * --------------------------------------------------------------------
+/**
+ * Path to the ROOTPATH folder
  */
-	require_once BASEPATH.'core/CodeIgniter.php';
+define('ROOTPATH', resolve_path($root_path, 'ROOTPATH folder'));
+
+/**
+ * Path to the system directory
+ */
+define('BASEPATH', resolve_path(ROOTPATH.$system_path, 'system folder'));
+
+/**
+ * Name of the "system" directory
+ */
+define('SYSDIR', basename(BASEPATH));
+
+/**
+ * Path to the "application" directory
+ */
+define('APPPATH', resolve_path(ROOTPATH.$application_folder, 'application folder'));
+
+/**
+ * Path to the modules folder
+ */
+defined('MODPATH') OR define('MODPATH', resolve_path(ROOTPATH.$modules_folder, 'modules folder'));
+
+
+/**
+ * Path to the "views" folder
+ */
+ if ( ! isset($view_folder[0]) && is_dir(APPPATH.'views'.DS)) {
+	 define('VIEWPATH', resolve_path(APPPATH.'views', 'views folder'));
+ } else {
+	 define('VIEWPATH', resolve_path(ROOTPATH.$view_folder, 'views folder'));
+ }
+
+
+//------------------------------------------------------------------------------
+//	LOAD THE BOOTSTRAP FILE
+//------------------------------------------------------------------------------
+require_once BASEPATH.'core/CodeIgniter.php';
