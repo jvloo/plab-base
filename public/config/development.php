@@ -3,7 +3,7 @@ defined('IN_PLAB') OR exit('No direct script access allowed');
 
 /*
  *---------------------------------------------------------------
- * SOURCE FILE DIRECTORY
+ * ROOT DIRECTORY
  *---------------------------------------------------------------
  *
  * This folder contains all source files that are hidden from
@@ -14,7 +14,7 @@ defined('IN_PLAB') OR exit('No direct script access allowed');
  *
  * NO TRAILING SLASH!
  */
- $source_path = '../';
+ $root_path = '../';
 
 /*
  *---------------------------------------------------------------
@@ -42,6 +42,17 @@ defined('IN_PLAB') OR exit('No direct script access allowed');
  * NO TRAILING SLASH!
  */
 	$application_folder = 'core/package/plab/core';
+
+/*
+ *---------------------------------------------------------------
+ * MODULES DIRECTORY NAME
+ *---------------------------------------------------------------
+ *
+ * This folder contains all pluggable modules for the application
+ *
+ * NO TRAILING SLASH!
+ */
+	$modules_folder = 'app/modules';
 
 /*
  *---------------------------------------------------------------
