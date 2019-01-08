@@ -1,6 +1,20 @@
 <?php
 /*
  *---------------------------------------------------------------
+ * APPLICATION VERSION
+ *---------------------------------------------------------------
+ */
+ define('APP_VERSION', '0.1.0-beta.1');
+ 
+/*
+ *---------------------------------------------------------------
+ * APPLICATION OFFLINE MODE
+ *---------------------------------------------------------------
+ */
+ define('APP_OFFLINE', false);
+
+/*
+ *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
  *---------------------------------------------------------------
  *
@@ -48,9 +62,99 @@
 			exit(1); // EXIT_ERROR
 	}
 
+/*
+ *---------------------------------------------------------------
+ * ROOT DIRECTORY
+ *---------------------------------------------------------------
+ *
+ * This folder contains all source files that are hidden from
+ * public access.
+ *
+ * Set the path to the source files from the path of same directory
+ * that houses index.php (FCPATH).
+ *
+ * NO TRAILING SLASH!
+ */
+	switch (ENVIRONMENT) {
+		case 'development':
+			$root_path = '../';
+			break;
+
+		case 'testing':
+		case 'production':
+			$root_path = '';
+			break;
+
+		default:
+			header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+			echo 'The application environment is not set correctly.';
+			exit(1); // EXIT_ERROR
+	}
+
+/*
+ *---------------------------------------------------------------
+ * SYSTEM DIRECTORY NAME
+ *---------------------------------------------------------------
+ *
+ * This variable must contain the name of your "system" directory.
+ * Set the path if it is not in the same directory as this file.
+ */
+	$system_path = 'src/system';
+
+/*
+ *---------------------------------------------------------------
+ * APPLICATION DIRECTORY NAME
+ *---------------------------------------------------------------
+ *
+ * If you want this front controller to use a different "application"
+ * directory than the default one you can set its name here. The directory
+ * can also be renamed or relocated anywhere on your server. If you do,
+ * use an absolute (full) server path.
+ * For more info please see the user guide:
+ *
+ * https://codeigniter.com/user_guide/general/managing_apps.html
+ *
+ * NO TRAILING SLASH!
+ */
+	$application_folder = 'src/application';
+
+/*
+ *---------------------------------------------------------------
+ * MODULES DIRECTORY NAME
+ *---------------------------------------------------------------
+ *
+ * This folder contains all pluggable modules for the application
+ *
+ * NO TRAILING SLASH!
+ */
+	$modules_folder = 'app/modules';
+
+/*
+ *---------------------------------------------------------------
+ * VIEW DIRECTORY NAME
+ *---------------------------------------------------------------
+ *
+ * If you want to move the view directory out of the application
+ * directory, set the path to it here. The directory can be renamed
+ * and relocated anywhere on your server. If blank, it will default
+ * to the standard location inside your application directory.
+ * If you do move this, use an absolute (full) server path.
+ *
+ * NO TRAILING SLASH!
+ */
+	$view_folder = '';
+
+
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
 // --------------------------------------------------------------------
+
+/**
+ * Set the current directory correctly for CLI requests
+ */
+	if (defined('STDIN')) {
+		chdir(dirname(__FILE__));
+	}
 
 /**
  * Resolve Path Function
@@ -59,7 +163,7 @@
  * @param  string       $path_name [description]
  * @return string       [description]
  */
-function resolve_path($path, $path_name) {
+function resolve_path(string $path, string $path_name) {
 	// Check if the path exists
 	if ( ! is_dir($path)) {
 		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
@@ -78,26 +182,6 @@ function resolve_path($path, $path_name) {
 
 	return $path;
 }
-
-/**
- * Plab Container
- *
- * Serving the same purpose for defined('BASEPATH') in all
- * Codeigniter source files.
- */
-define('IN_PLAB', true);
-
-/**
- * Set the current directory correctly for CLI requests
- */
-	if (defined('STDIN')) {
-		chdir(dirname(__FILE__));
-	}
-
-/**
- * Load the system config file
- */
-	require_once './config/'.ENVIRONMENT.'.php';
 
 //------------------------------------------------------------------------------
 // DEFINE SOME USEFUL CONSTANTS

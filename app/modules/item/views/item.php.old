@@ -1,0 +1,519 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed.');
+?>
+
+<section class="dialog-box bg-gradient bg-light">
+  <main class="container px-5 py-3">
+    <section class="row item-section">
+      <div class="col-md-12 m-0 mb-3">
+        <style>
+          hr {
+            width: 100%;
+            height: 2px;
+            box-shadow: 0 10px 10px -10px #8c8b8b
+          }
+          ol.breadcrumb {
+            margin: 0;
+            background: none
+          }
+          ol.breadcrumb li a {
+            color: #EE3833;
+            font-weight: bold;
+            font-size: 14px;
+          }
+          ol.breadcrumb li a:hover {
+            color: #F68B80;
+            text-decoration: none
+          }
+          ol.breadcrumb li.active {
+            color: grey
+          }
+          .breadcrumb-item+.breadcrumb-item::before {
+            display:inline-block;
+            padding-left:.5rem;
+            padding-right:.5rem;
+            color:#6c757d;
+            content:"/"
+          }
+        </style>
+        <nav aria-label="breadcrumb">
+          <?php if( ! empty($breadcrumb) ) : ?>
+          <ol class="breadcrumb">
+            <?php foreach( $breadcrumb as $index => $bc_item ) : ?>
+            <?php $last_index = key( end($breadcrumb) ); ?>
+            <li class="breadcrumb-item p-0 m-0"><a href="<?php echo $bc_item['link']; ?>"><?php echo $bc_item['label']; ?></a></li>
+            <?php endforeach; ?>
+          </ol>
+          <?php endif; ?>
+        </nav>
+      </div>
+      <!--- product card --->
+      <div class="col-9 product-card card shadow">
+        <!--- product overview -->
+        <div class="row p-0">
+          <!--- product preview --->
+          <div class="col-md-4 product-preview">
+            <div id="preview-carousel" class="preview-carousel carousel slide" data-ride="carousel" data-interval="false">
+              <!--- carousel content --->
+              <div class="carousel-inner">
+                <?php foreach( $item['preview'] as $index => $preview ) : ?>
+                <div class="carousel-item<?php echo $index === 0 ? ' active' : ''; ?>">
+                  <img id="preview-<?php echo ($index + 1); ?>" data-zoom-image="<?php echo $preview['source']; ?>" class="d-block w-100" src="<?php echo $preview['source']; ?>" alt="<?php echo $preview['label']; ?>">
+                </div>
+                <?php endforeach; ?>
+
+              </div><!--- END carousel content --->
+              <!--- carousel control --->
+              <div class="carousel-control mt-3">
+                <ol class="carousel-indicators">
+                  <?php if( ! empty($item['preview']) ) : foreach( $item['preview'] as $index => $preview ) : ?>
+                  <li data-target="#preview-carousel" data-slide-to="<?php echo $index; ?>"<?php echo $index === 0 ? ' class="active"' : ''; ?>>
+                    <img src="<?php echo $preview['source']; ?>" style="width: 60px; height: 60px">
+                  </li>
+                <?php endforeach; endif; ?>
+                </ol>
+              </div><!--- END carousel control --->
+            </div>
+          </div><!--- END product preview --->
+
+          <!--- product information --->
+          <div class="col-md-8 product-info">
+            <h5 class="product-name"><?php echo $item['name']; ?></h5>
+            <div class="product-price my-3">
+              <h4 class="total-price color-orange"></h4>
+              <h5 class="total-discount d-none"><s>RM 800</s> 50%</h5>
+            </div>
+            <div class="product-summary text-muted my-3"><?php echo $item['summary']; ?></div>
+            <div class="product-extra-info">
+              <label class="unit-price">Unit Price: <span></span></label>
+              <label class="total-weight">Total Weight: <span></span></label>
+              <label class="est-delivery">Est. Delivery: <span></span></label>
+            </div>
+
+            <!--- product product specifications --->
+            <details id="spec0" class="product-spec d-none" open>
+              <summary class="spec-title">
+                Material:
+                <span>
+                  <label class="btn btn-default btn-sm" for="s1-opt1">
+                    <i style="background: red"></i>
+                  </label>
+                  <code class="ml-4">
+                    rgb(255, 0, 0)
+                  </code>
+                </span>
+              </summary>
+              <p class="spec-options color-options">
+                <input type="radio" name="spec1" id="s1-opt1" autocomplete="off" onclick="updateSpecDataColor(this)" checked>
+                <label class="btn btn-default btn-sm" for="s1-opt1">
+                  <i style="background: red"></i>
+                </label>
+                <input type="radio" name="spec1" id="s1-opt2" autocomplete="off" onclick="updateSpecDataColor(this)">
+                <label class="btn btn-default btn-sm" for="s1-opt2">
+                  <i style="background: green"></i>
+                </label>
+                <input type="radio" name="spec1" id="s1-opt3" autocomplete="off" onclick="updateSpecDataColor(this)">
+                <label class="btn btn-default btn-sm" for="s1-opt3">
+                  <i style="background: blue"></i>
+                </label>
+              </p>
+            </details>
+            <?php
+            foreach( $item['spec_groups'] as $g_index => $group ) :
+              if( ! empty($group['specs']) ) :
+                foreach( $group['specs'] as $s_index => $spec ) :
+            ?>
+            <details id="spec-<?php echo $spec["spec_id"]; ?>" class="product-spec"<?php echo ($g_index === 0 && $s_index === 0) ? ' open' : ''; ?>>
+              <summary class="spec-title">
+                <?php echo ucwords($spec["name"]) . ': '; ?>
+                <span id="spec-<?php echo $spec["spec_id"]; ?>-chosen"></span>
+              </summary>
+              <p class="spec-options">
+                <?php if( $spec['is_option_multiple'] ) : ?>
+                <?php else : foreach( $spec['options'] as $o_index => $option ) : ?>
+                  <?php
+                      switch($option['type']) :
+                      case 'label':
+                  ?>
+                    <input type="radio" name="spec-<?php echo $spec["spec_id"]; ?>" id="option-<?php echo $option["option_id"]; ?>" value="<?php echo $option["value"]; ?>" autocomplete="off" onclick="updateSpecData(this);"<?php echo $o_index === 0 ? ' checked' : ''; ?>>
+                    <label class="btn btn-default btn-sm<?php echo $o_index !== 0 ? ' mx-1' : ' mr-1'; ?>" for="option-<?php echo $option["option_id"]; ?>">
+                      <?php echo $option['prefix_or_true'] . ' ' . $option['value'] . ' ' . $option['suffix_or_false']; ?>
+                    </label>
+                  <?php
+                    end($spec['options']);
+                    echo $o_index !== key($spec['options']) ? $spec['option_delimiter'] : '';
+
+                    break;
+
+                    case 'number':
+                  ?>
+                  <label class="btn btn-default btn-sm btn-number">
+                    <span class="option-label"><?php echo $option['value'] . ' :'; ?></span>
+                    <span class="quantity">
+                      <input type="number" id="option-<?php echo $option['option_id']; ?>" class="qty" value="0" step="1" min="0" max="9999" maxLength="4" onchange="updateSpecData();" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                      <input type="button" value="+" class="plus" onclick="updateSpecData();">
+                      <input type="button" value="-" class="minus" onclick="updateSpecData();">
+                    </span>
+                  </label>
+                  <?php
+                    end($spec['options']);
+                    echo $o_index !== key($spec['options']) ? $spec['option_delimiter'] : '';
+
+                    break;
+
+                    case 'boolean':
+                  ?>
+                    <input type="radio" name="option-<?php echo $option["option_id"]; ?>" id="option-<?php echo $option["option_id"]; ?>-true" value="<?php echo $option['prefix_or_true'] . ' ' . $option['value']; ?>" autocomplete="off" onclick="updateSpecData(this);"<?php echo $o_index === 0 ? ' checked' : ''; ?>>
+                    <label class="btn btn-default btn-sm<?php echo $o_index !== 0 ? ' mx-1' : ' mr-1'; ?>" for="option-<?php echo $option["option_id"]; ?>-true">
+                      <?php echo $option['prefix_or_true'] . ' ' . $option['value']; ?>
+                    </label>
+
+                    <input type="radio" name="option-<?php echo $option["option_id"]; ?>" id="option-<?php echo $option["option_id"]; ?>-false" value="<?php echo $option['suffix_or_false'] . ' ' . $option['value']; ?>" autocomplete="off" onclick="updateSpecData(this);"<?php echo $o_index === 0 ? ' checked' : ''; ?>>
+                    <label class="btn btn-default btn-sm<?php echo $o_index !== 0 ? ' mx-1' : ' mr-1'; ?>" for="option-<?php echo $option["option_id"]; ?>-false">
+                      <?php echo $option['suffix_or_false'] . ' ' . $option['value']; ?>
+                    </label>
+                  <?php
+                    break;
+                    endswitch;
+                  ?>
+                <?php endforeach; endif; ?>
+              </p>
+            </details>
+            <?php endforeach; endif; endforeach; ?>
+            <!--- END product specifications --->
+
+            <div class="row mt-4">
+              <div class="product-set">
+                <span>Set</span>
+                <div class="quantity">
+                  <input type="number" class="qty" value="1" step="1" min="1" max="9999" maxLength="4" onchange="updateSpecData();" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                  <input type="button" value="+" class="plus" onclick="updateSpecData();">
+                  <input type="button" value="-" class="minus" onclick="updateSpecData();">
+                </div>
+              </div>
+
+              <!--- product action --->
+              <div class="ml-3 product-action">
+                <button class="btn buy-now">Buy Now</button>
+                <button class="btn add-cart" onclick="addCart();">Add to Cart</button>
+              </div><!--- END product action --->
+            </div>
+
+          </div><!--- END product info --->
+        </div><!--- END product overview --->
+
+        <?php if( ! empty($item['details']['description']) || ! empty($item['details']['faq']) ) :?><hr><?php endif; ?>
+
+        <!--- product details --->
+        <div class="row product-details my-4">
+          <div class="col-md-12 tab-navs">
+            <nav class="nav tabs" role="tablist">
+              <div class="selector"></div>
+              <?php if( ! empty($item['details']['description']) ) : ?>
+              <a class="active" href="#description" data-toggle="tab" role="tab">Description</a>
+              <?php endif; ?>
+              <?php if( ! empty($item['details']['faq']) ) : ?>
+              <a<?php echo empty($item['details']['description']) ? ' class="active"' : ''; ?> href="#product-faq" data-toggle="tab" role="tab">Product FAQ</a>
+              <?php endif; ?>
+            </nav>
+          </div>
+          <div class="col-md-12">
+            <div class="tab-content">
+              <?php if( ! empty($item['details']['description']) ) : ?>
+              <div class="tab-pane p-5 active" id="description" role="tabpanel">
+                <?php echo $item['details']['description']; ?>
+              </div>
+              <?php endif; ?>
+              <?php if( ! empty($item['details']['faq']) ) : ?>
+              <div class="tab-pane p-5<?php echo empty($item['details']['description']) ? ' active' : ''; ?>" id="product-faq" role="tabpanel">
+                <?php foreach( $item['details']['faq'] as $index => $each ) : ?>
+                  <details id="faq-<?php echo $index; ?>" class="product-faq"<?php echo $index === 0 ? ' open' : ''; ?>>
+                    <summary class="faq-question">Q: <?php echo $each['question']; ?></summary>
+                    <p>A: <?php echo $each['answer']; ?></p>
+                  </details>
+                <?php endforeach; ?>
+              </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div><!--- END product details --->
+      </div><!--- product card --->
+
+      <!--- side panel --->
+      <div class="col-3 side-panel">
+
+        <!--- delivery options --->
+        <div class="col-md-12 delivery-options card shadow">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item title">
+              <small><b>Delivery Options</b></small>
+            </li>
+            <li class="list-group-item d-none">
+              <div class="row">
+                <div class="col-1 mt-1">
+                  <i class="fas fa-map-marker-alt mx-1"></i>
+                </div>
+                <div class="col-10 pl-4 pr-5">
+                  Johor, Gelang Patah, 81550
+                  <span class="edit-button">
+                    <div class="round-edit-btn">
+                      <i class="fas fa-pen"></i>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-1 d-flex align-items-center">
+                  <i class="fas fa-map-marker-alt mx-1"></i>
+                </div>
+                <div class="col-10 pl-3 pr-4">
+                  <input class="form-control" type="text" placeholder="Enter Postal Code">
+                  <span class="save-button">
+                    <div class="round-save-btn">
+                      <span></span>
+                    </div>
+                  </span>
+
+                </div>
+              </div>
+            </li>
+            <hr >
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-1 mt-1">
+                  <i class="fas fa-truck"></i>
+                </div>
+                <div class="col-10 pl-4">
+                  Free Delivery
+                  <br><small>within Peninsular Malaysia</small>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-1 mt-1">
+                  <i class="fas fa-hand-lizard"></i>
+                </div>
+                <div class="col-10 pl-4">
+                  Self-Pickup Available
+                  <br><small>within Klang Valley area</small>
+
+                  <span class="round-button">
+                    <div class="round-checkbox">
+                      <input type="checkbox" id="checkbox" />
+                      <label for="checkbox"></label>
+                    </div>
+                  </span>
+
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item d-none">
+              <div class="row">
+                <div class="col-1 mt-1">
+                  <i class="fas fa-plane"></i>
+                </div>
+                <div class="col-10 pl-4 pr-5">
+                  Standard Delivery
+                  <br><small>East Malaysia</small>
+                  <span class="delivery-fee">RM40</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div><!--- END delivery options --->
+      </div><!--- END side panel --->
+    </section>
+
+  </main>
+
+  <div class="modal fade" id="add-cart-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Notice</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center mt-3" id="modal-body">
+          <h5 class="color-orange text-center"></h5>
+          <small></small>
+        </div>
+        <div class="modal-footer mx-auto mb-3">
+          <button onclick="window.location.href='<?php echo site_url("cart/my"); ?>';" type="button" class="btn bg-gradient bg-orange text-white mr-2">Go To Cart</button>
+          <button type="button" class="btn bg-gradient bg-yellow text-white" data-dismiss="modal">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  var specStatus = {};
+
+  function updateSpecData() {
+    <?php foreach( $item['spec_groups'] as $g_index => $group ) : ?>
+      specStatus[<?php echo $g_index; ?>] = {groupID: <?php echo $group['spec_group_id']; ?>};
+      specStatus[<?php echo $g_index; ?>]['specs'] = {};
+
+      <?php if( ! empty($group['specs']) ) : foreach( $group['specs'] as $s_index => $spec ) : ?>
+
+        specStatus[<?php echo $g_index; ?>]['specs'][<?php echo $s_index; ?>] = {specID: '<?php echo $spec['spec_id']; ?>', name: "<?php echo $spec['name']; ?>"};
+
+        <?php foreach( $spec['options'] as $o_index => $option ) : switch($option['type']) :
+          case 'label':
+        ?>
+
+          var spec<?php echo $spec['spec_id']; ?> = document.getElementsByName('spec-<?php echo $spec['spec_id']; ?>');
+          for (var i = 0, length = spec<?php echo $spec['spec_id']; ?>.length; i < length; i++) {
+            if (spec<?php echo $spec['spec_id']; ?>[i].checked) {
+
+              var spec<?php echo $spec['spec_id']; ?>Label = spec<?php echo $spec['spec_id']; ?>[i].getAttribute('id');
+              var spec<?php echo $spec['spec_id']; ?>Chosen = $("label[for='" + spec<?php echo $spec['spec_id']; ?>Label + "']").html().trim();
+
+              $("#spec-<?php echo $spec['spec_id']; ?>-chosen").html(spec<?php echo $spec['spec_id']; ?>Chosen);
+
+              specStatus[<?php echo $g_index; ?>]['specs'][<?php echo $s_index; ?>]['value'] = spec<?php echo $spec['spec_id']; ?>[i].value;
+              <?php if( $spec['name'] == 'quantity' ) : ?>
+              specStatus[<?php echo $g_index; ?>]['quantity'] = spec<?php echo $spec['spec_id']; ?>[i].value;
+              <?php endif; ?>
+              break;
+            }
+          }
+
+        <?php break; case 'number': ?>
+
+          var option<?php echo $option['option_id']; ?>Value = $('#option-<?php echo $option['option_id']; ?>').val()
+          specStatus[<?php echo $g_index; ?>]['specs'][<?php echo $s_index; ?>]['value'][<?php echo $o_index; ?>] = option<?php echo $option['option_id']; ?>Value;
+
+        <?php break; case 'boolean': ?>
+
+          var option<?php echo $option['option_id']; ?> = document.getElementsByName('option-<?php echo $option['option_id']; ?>');
+          for (var i = 0, length = option<?php echo $option['option_id']; ?>.length; i < length; i++) {
+            if (option<?php echo $option['option_id']; ?>[i].checked) {
+
+              var option<?php echo $option['option_id']; ?>Chosen = option<?php echo $option['option_id']; ?>[i].value;
+
+              $("#spec-<?php echo $spec['spec_id']; ?>-chosen").html(option<?php echo $option['option_id']; ?>Chosen);
+
+              specStatus[<?php echo $g_index; ?>]['specs'][<?php echo $s_index; ?>]['value'] = option<?php echo $option['option_id']; ?>Chosen;
+
+              break;
+            }
+          }
+
+        <?php
+          break;
+          endswitch;
+          endforeach;
+        ?>
+      <?php endforeach; endif; ?>
+    <?php endforeach; ?>
+
+    //console.log(specStatus);
+
+    // For DEBUG use
+    //var json = JSON.stringify(specStatus, null, 2); // spacing level = 2
+    //var win = window.open();
+    //win.document.write(json);
+    $.post("<?php echo site_url('item/getSpecData'); ?>", {
+      itemID: "<?php echo $item['item_id']; ?>",
+      specsData: specStatus,
+    })
+    .done(function(data) {
+      console.log(data);
+      var data = JSON.parse(data);
+      var orderQuantity = parseInt( $('.qty').val() );
+
+      if( orderQuantity <= 0 || data === null ) {
+        var totalPrice = unitPrice = 'RM ---.--';
+        var totalWeight = '---.-- kg';
+        var estDelivery = 'N/A';
+
+      } else {
+        var totalPrice = 'RM ' + (parseFloat(data['spec']['total_price']).toFixed(2) * orderQuantity);
+        var unitPrice = 'RM ' + (parseFloat( (data['spec']['total_price']/data['spec']['quantity']) ).toFixed(2) * orderQuantity);
+        var totalWeight = (parseFloat(data['spec']['total_weight']).toFixed(2) * orderQuantity) + ' kg';
+        var estDelivery = (parseInt(data['item']['min_process_day']) + 1) + ' to ' + (parseInt(data['item']['max_process_day']) + 1) + ' days';
+      }
+
+      $('.total-price').text(totalPrice);
+      $('.unit-price span').text(unitPrice);
+      $('.total-weight span').text(totalWeight);
+      $('.est-delivery span').text(estDelivery);
+
+    })
+    .fail(function() {
+      console.log("ERROR: Fail to update product info.");
+    });
+  }
+  updateSpecData();
+
+  function addCart() {
+    var orderQuantity = parseInt( $('.qty').val() );
+
+    $.post("", {
+      itemID: "<?php echo $item['item_id']; ?>",
+      specsData: specStatus,
+      quantity: orderQuantity
+    })
+    .done(function(data) {
+      var cartQuantity = $('.btn-shopping-cart span').text();
+      var newCartQuantity = parseInt(cartQuantity) + parseInt(orderQuantity);
+
+      // visual increment cart count (cart icon)
+      $('.btn-shopping-cart span').text(newCartQuantity);
+      $('.btn-shopping-cart').addClass('animated bounce');
+      setTimeout(function () {
+        $('.btn-shopping-cart').removeClass('animated bounce');
+      },800);
+
+      if( parseInt(orderQuantity) > 1 ) {
+        var addedMsg = orderQuantity + ' items have been added into shopping cart !';
+      } else {
+        var addedMsg = orderQuantity + ' item has been added into shopping cart !';
+      }
+      if( parseInt(newCartQuantity) > 1 ) {
+        var cartQtyMsg = 'There are totally ' + newCartQuantity + ' items in your shopping cart.';
+      } else {
+        var cartQtyMsg = 'There is ' + newCartQuantity + ' item in your shopping cart.';
+      }
+      $('#modal-body h5').text(addedMsg);
+      $('#modal-body small').text(cartQtyMsg);
+      $('#add-cart-modal').modal();
+
+    })
+    .fail(function(data) {
+      console.log("ERROR: Fail to add cart.");
+
+      // DEBUG
+      var cartQuantity = $('.btn-shopping-cart span').text();
+      var newCartQuantity = parseInt(cartQuantity) + parseInt(orderQuantity);
+
+      // visual increment cart count (cart icon)
+      $('.btn-shopping-cart span').text(newCartQuantity);
+      $('.btn-shopping-cart').addClass('animated bounce');
+      setTimeout(function () {
+        $('.btn-shopping-cart').removeClass('animated bounce');
+      },800);
+
+      if( parseInt(orderQuantity) > 1 ) {
+        var addedMsg = orderQuantity + ' items have been added into shopping cart !';
+      } else {
+        var addedMsg = orderQuantity + ' item has been added into shopping cart !';
+      }
+      if( parseInt(newCartQuantity) > 1 ) {
+        var cartQtyMsg = 'There are totally ' + newCartQuantity + ' items in your shopping cart.';
+      } else {
+        var cartQtyMsg = 'There is ' + newCartQuantity + ' item in your shopping cart.';
+      }
+      $('#modal-body h5').text(addedMsg);
+      $('#modal-body small').text(cartQtyMsg);
+      $('#add-cart-modal').modal();
+    });
+  }
+
+  </script>
+</section>

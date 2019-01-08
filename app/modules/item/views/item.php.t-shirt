@@ -1,0 +1,1036 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed.');
+?>
+  <div class="container p-3 pb-5">
+    <!--- Content Topbar --->
+    <section class="content-topbar">
+      <div class="row">
+        <div class="content-breadcrumb col-sm-18">
+          <style>
+            .breadcrumb {
+              background: none;
+              padding: 0px 15px;
+            }
+            .breadcrumb-item.active {
+              color: #EB3833;
+              font-weight: 600;
+            }
+            .breadcrumb-item + .breadcrumb-item::before {
+              font-weight:bold;
+              content:">"
+            }
+          </style>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Shirt Printing</a></li>
+            <li class="breadcrumb-item"><a href="#">Silkscreen Printing</a></li>
+            <li class="breadcrumb-item active">OrenSport Cotton T-shirt</li>
+          </ol>
+        </div>
+        <div class="content-toolbar col-sm-6">
+          <ul class="nav d-flex justify-content-end">
+            <li class="nav-item"><!--- List/Table View ---></li>
+          </ul>
+        </div>
+      </div>
+    </section><!--- END Content Topbar --->
+
+    <!-- div class="content-header">
+      <div class="row">
+        <div class="col-sm-18">
+          https://www.vecteezy.com/vector-art/101950-free-geometrical-leaves-vector
+          <div class="p-4 d-none" style="border-top-left-radius: 5px; border-top-right-radius: 5px; background-size: cover; background-image: url(https://static.vecteezy.com/system/resources/previews/000/101/950/large_2x/free-geometrical-leaves-vector.png)"></div>
+          https://www.colourbox.com/image/orange-background-with-white-polka-dots-pattern-image-9623566
+          <div class="p-4 d-none" style="border-top-left-radius: 5px; border-top-right-radius: 5px; background-size: cover; background-image: url(https://www.colourbox.com/preview/9623566-orange-background-with-white-polka-dots-pattern.jpg)"></div>
+           http://www.yunlinplay.tw/gkeys/orange-pattern-wallpaper/
+           https://www.vectorstock.com/royalty-free-vector/orange-cream-star-polka-dots-background-vector-7591462
+           https://www.template.net/wordpress-galley-templates/design-background-patterns/
+           enjoycss.com
+          <style>
+            .orange-striped {
+              opacity: 0.8; -webkit-box-sizing: content-box;
+              -moz-box-sizing: content-box;
+              box-sizing: content-box;
+              border: none;
+              font: normal 100%/normal Arial, Helvetica, sans-serif;
+              color: rgba(255,255,255,1);
+              -o-text-overflow: clip;
+              text-overflow: clip;
+              background: -webkit-linear-gradient(0deg, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 0), rgb(255, 153, 0);
+              background: -moz-linear-gradient(90deg, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 0), rgb(255, 153, 0);
+              background: linear-gradient(90deg, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 0), rgb(255, 153, 0);
+              background-position: auto auto;
+              -webkit-background-origin: padding-box;
+              background-origin: padding-box;
+              -webkit-background-clip: border-box;
+              background-clip: border-box;
+              -webkit-background-size: 50px auto;
+              background-size: 50px auto;
+            }
+          </style>
+          <div class="p-2 d-none orange-striped"></div>
+        </div>
+      </div>
+    </div -->
+
+    <!--- Content Body --->
+    <div class="content-body">
+      <div class="row">
+        <!--- Item Card --->
+        <style>
+          .item-card,
+          .item-card-aside,
+          .item-card-main {
+            padding: 0px;
+          }
+
+          .item-card .item-card-aside .item-preview {
+            padding: 15px;
+          }
+          .item-card .item-card-aside .item-preview-indicators {
+            padding: 15px;
+            background-color: #FAFAFA;
+            border-bottom: 1px solid rgba(222, 219, 221, 0.5);
+          }
+
+        </style>
+        <div class="item-card card-group shadow col-sm-18">
+
+          <aside class="item-card-aside card col-sm-9">
+            <div class="item-preview">
+              <img class="card-img" src="https://via.placeholder.com/1200x1200" alt="Card image cap">
+              <div class="card-img-overlay">
+              </div>
+            </div>
+            <div class="item-preview-indicators">
+            </div>
+          </aside>
+
+          <main class="item-card-main card col-sm-15">
+            <style>
+              .item-card .item-card-main .list-group .list-group-item:first-of-type {
+                border-top: none;
+                margin-top: 5px;
+              }
+            </style>
+            <ul class="list-group list-group-flush">
+              <li class="item-info-group list-group-item">
+
+                <h4 class="item-title">
+                  <span class="title">OrenSport Cotton T-shirt</span>
+                </h4>
+
+                <style>
+                  .item-card .item-card-main .item-price {
+                    position: relative;
+                    padding: 5px;
+                    margin: 15px 0px;
+                    background-color: #FDF4F7;
+                  }
+                  .item-card .item-card-main .item-price .item-original-price {
+                    display: inline-block;
+                    text-decoration: line-through;
+                  }
+                </style>
+                <style>
+                  .loading {
+                    padding: 15px;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                  }
+                  .loading img {
+                    margin-bottom: 10px;
+                  }
+                </style>
+                <div class="item-price">
+                  <div class="loading d-none" data-loading="price">
+                    <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                    <h6 class="text-primary">updating price...</h6>
+                  </div>
+                  <div class="loaded"  data-loaded="price">
+                    <h2 class="item-total-price text-primary">
+                      RM <span>30.50</span>
+                    </h2>
+                    <h6 class="item-discount text-muted">
+                      <span class="item-original-price">RM <span>30.50</span></span>
+                      <span class="item-discount-percent badge badge-primary"><span>30</span>% OFF</span>
+                    </h6>
+                  </div>
+                </div>
+
+                <style>
+                  .item-card .item-card-main .item-info .label-group {
+                    margin: 0px;
+                  }
+                  .item-card .item-card-main .item-info .label-body {
+                    font-weight: bold;
+                  }
+                </style>
+                <div class="item-info">
+                  <ul class="label-group">
+                    <a href="#">
+                      <li class="label-item label-item-sm label-item-flush">
+                        <span class="label-title">Price per unit:</span>
+                        <span class="item-unit-price label-body">
+                          RM <span>30.50</span>
+                        </span>
+                        <i class="far fa-question-circle ml-2"></i>
+                      </li>
+                    </a>
+                    <a href="#">
+                      <li class="label-item label-item-sm label-item-flush">
+                        <span class="label-title">Total Weight:</span>
+                        <span class="item-total-weight label-body">
+                          <span>2.00</span> KG
+                        </span>
+                        <i class="far fa-question-circle ml-2"></i>
+                      </li>
+                    </a>
+                    <a href="#">
+                      <li class="label-item label-item-sm label-item-flush">
+                        <span class="label-title">Estimated Delivery Day:</span>
+                        <span class="item-est-delivery label-body">
+                          <span>5</span> - <span>10</span> Days
+                        </span>
+                        <i class="far fa-question-circle ml-2"></i>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="item-attribute-group list-group-item">
+                <div class="mb-3">
+                  <small class="text-primary">
+                    <b>Shirt Information</b>
+                  </small>
+                </div>
+                <style>
+                  .item-attribute {
+                    width: 100%;
+                    padding: 0px !important;
+                    padding-right: 5px !important;
+                    overflow: hidden;
+                  }
+                  .item-attribute .attribute-title {
+                    background: #FAFAFA;
+                    padding: 8px;
+                  }
+                  .item-attribute .attribute-option {
+                    padding-left: 15px;
+                    font-weight: bold;
+                  }
+
+                  .item-attribute .attribute-option.has-input {
+                    padding: 0px;
+                  }
+                  .item-attribute .attribute-option.has-input input[type=text] {
+                    background: none;
+                    padding: 8px 10px;
+                    width: 100%;
+                    margin: 0px;
+                    color: #212529;
+                    font-size: 1rem;
+                    border: none;
+                  }
+                  .item-attribute .attribute-option.has-input input[type=text]:active,
+                  .item-attribute .attribute-option.has-input input[type=text]:focus {
+                    outline: 0;
+                  }
+                  .item-attribute .attribute-option.has-input .row,
+                  .item-attribute .attribute-option.has-input [class*="col-"] {
+                    padding: 0px;
+                    margin: 0px;
+                  }
+                  .item-attribute .attribute-option.has-input .input-addon {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: normal;
+                    font-size: 1rem;
+                    color: #212529;
+                    background-color: #FAFAFA;
+                  }
+                  .item-attribute .attribute-option.has-input .input-addon.bordered {
+                    border-left: 1px solid rgba(222, 219, 221, 0.5);
+                    border-right: 1px solid rgba(222, 219, 221, 0.5);
+                  }
+                  .item-attribute .attribute-option.has-input .input-addon.border-right {
+                    border-left: none;
+                  }
+                  .item-attribute .attribute-option.has-input .input-addon.border-left {
+                    border-right: none;
+                  }
+                </style>
+                <div class="label-group">
+                  <style>
+                    .item-attribute > div {
+                      position: relative;
+                    }
+                    .item-attribute .loading {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: center;
+                    }
+                  </style>
+                  <details class="item-attribute label-item">
+                    <summary>
+                      <span class="attribute-title label-title col-sm-7">Color</span>
+                      <span class="attribute-option label-body col-sm-17">
+                        <div class="option-addon">
+                          <span class="addon-color" style="background: yellow"></span>
+                          <span class="addon-text">Yellow</span>
+                        </div>
+                      </span>
+                    </summary>
+                    <div>
+                      <div class="loading d-none" data-loading="options">
+                        <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                        <h6 class="text-primary">updating...</h6>
+                      </div>
+                      <div class="loaded row" data-loaded="options">
+                        <div class="col-sm-7">
+                        </div>
+                        <div class="item-option-group col-sm-17">
+                          <ul class="label-group">
+                            <!--- Option With Color Addon --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-2" name="option" value="100">
+                              <label class="option-title has-addon form-check-label label-item bg-light" for="option-2">
+                                <div class="option-addon">
+                                  <span class="addon-color" style="background: yellow"></span>
+                                  <span class="addon-text">Yellow</span>
+                                </div>
+                              </label>
+                            </li><!--- END Option With Color Addon --->
+
+                            <!--- Option With Color Addon --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-2" name="option" value="100">
+                              <label class="option-title has-addon form-check-label label-item bg-light" for="option-2">
+                                <div class="option-addon">
+                                  <span class="addon-color" style="background: Red"></span>
+                                  <span class="addon-text">Red</span>
+                                </div>
+                              </label>
+                            </li><!--- END Option With Color Addon --->
+
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                  <details class="item-attribute label-item">
+                    <summary>
+                      <span class="attribute-title label-title col-sm-7">Size & Quantity</span>
+                      <span class="attribute-option label-body col-sm-17">
+                        <div class="option-addon">
+                          <span class="addon-text">S: 1; M: 0; L: 0</span>
+                        </div>
+                      </span>
+                    </summary>
+                    <div>
+                      <div class="loading d-none" data-loading="options">
+                        <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                        <h6 class="text-primary">updating...</h6>
+                      </div>
+                      <div class="loaded row" data-loaded="options">
+                        <div class="col-sm-7">
+                        </div>
+                        <div class="item-option-group col-sm-17">
+                          <ul class="label-group">
+
+                            <!--- Option With Image Addon --->
+                            <style>
+                              .item-option {
+                                list-style: none;
+                              }
+                              .has-addon {
+                                padding: 0px !important;
+                              }
+                              .option-addon {
+                                display: inline-flex;
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                                padding: 5px;
+                              }
+                              .option-addon .addon-image img,
+                              .option-addon .addon-color {
+                                width: 30px;
+                                height: 30px;
+                              }
+                              .option-addon .addon-color {
+                                border-radius: 5px;
+                              }
+                              .option-addon .addon-text {
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: center;
+                                align-items: center;
+                                padding: 0px 10px;
+                              }
+
+                              .option-addon .addon-input {
+                                display: inline-block !important;
+                                width: 50px;
+                              }
+                              .option-addon .addon-input.addon-input-xs {
+                                width: 10px;
+                              }
+                              .option-addon .addon-input.addon-input-sm {
+                                width: 25px;
+                              }
+                              .option-addon .addon-input.addon-input-lg {
+                                width: 75px;
+                              }
+                              .option-addon .addon-input.addon-input-xl {
+                                width: 100px;
+                              }
+
+                              .option-addon .addon-input.quantity {
+                                border: 1px solid #ced4da;
+                                border-radius: .25rem;
+                                transition: border-color 0.15s ease-in-out;
+                              }
+                            </style>
+
+                            <!--- Option With Number Input --->
+                            <li class="item-option">
+                              <div class="option-title has-addon label-item bg-light" style="border: none">
+                                <div class="option-addon">
+                                  <div class="addon-text col-sm-5">XS: </div>
+                                  <div class="addon-input addon-input-lg quantity">
+                                    <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                    <input type="button" value="+" class="plus">
+                                    <input type="button" value="-" class="minus">
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="item-option">
+                              <div class="option-title has-addon label-item bg-light" style="border: none">
+                                <div class="option-addon">
+                                  <div class="addon-text col-sm-5">S: </div>
+                                  <div class="addon-input addon-input-lg quantity">
+                                    <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                    <input type="button" value="+" class="plus">
+                                    <input type="button" value="-" class="minus">
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="item-option">
+                              <div class="option-title has-addon label-item bg-light" style="border: none">
+                                <div class="option-addon">
+                                  <div class="addon-text col-sm-5">M: </div>
+                                  <div class="addon-input addon-input-lg quantity">
+                                    <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                    <input type="button" value="+" class="plus">
+                                    <input type="button" value="-" class="minus">
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="item-option">
+                              <div class="option-title has-addon label-item bg-light" style="border: none">
+                                <div class="option-addon">
+                                  <div class="addon-text col-sm-5">L: </div>
+                                  <div class="addon-input addon-input-lg quantity">
+                                    <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                    <input type="button" value="+" class="plus">
+                                    <input type="button" value="-" class="minus">
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <!--- END Option With Number Input --->
+
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </li>
+
+              <li class="item-attribute-group list-group-item">
+                <div class="mb-3">
+                  <small class="text-primary">
+                    <b>Printing Information</b>
+                  </small>
+                </div>
+                <style>
+                  .item-attribute {
+                    width: 100%;
+                    padding: 0px !important;
+                    padding-right: 5px !important;
+                    overflow: hidden;
+                  }
+                  .item-attribute .attribute-title {
+                    background: #FAFAFA;
+                    padding: 8px;
+                  }
+                  .item-attribute .attribute-option {
+                    padding-left: 15px;
+                    font-weight: bold;
+                  }
+
+                  .item-attribute .attribute-option.has-input {
+                    padding: 0px;
+                  }
+                  .item-attribute .attribute-option.has-input input[type=text] {
+                    background: none;
+                    padding: 8px 10px;
+                    width: 100%;
+                    margin: 0px;
+                    color: #212529;
+                    font-size: 1rem;
+                    border: none;
+                  }
+                  .item-attribute .attribute-option.has-input input[type=text]:active,
+                  .item-attribute .attribute-option.has-input input[type=text]:focus {
+                    outline: 0;
+                  }
+                  .item-attribute .attribute-option.has-input .row,
+                  .item-attribute .attribute-option.has-input [class*="col-"] {
+                    padding: 0px;
+                    margin: 0px;
+                  }
+                  .item-attribute .attribute-option.has-input .input-addon {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: normal;
+                    font-size: 1rem;
+                    color: #212529;
+                    background-color: #FAFAFA;
+                  }
+                  .item-attribute .attribute-option.has-input .input-addon.bordered {
+                    border-left: 1px solid rgba(222, 219, 221, 0.5);
+                    border-right: 1px solid rgba(222, 219, 221, 0.5);
+                  }
+                  .item-attribute .attribute-option.has-input .input-addon.border-right {
+                    border-left: none;
+                  }
+                  .item-attribute .attribute-option.has-input .input-addon.border-left {
+                    border-right: none;
+                  }
+                </style>
+                <div class="label-group">
+                  <style>
+                    .item-attribute > div {
+                      position: relative;
+                    }
+                    .item-attribute .loading {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: center;
+                    }
+                  </style>
+                  <details class="item-attribute label-item">
+                    <summary>
+                      <span class="attribute-title label-title col-sm-7">Front</span>
+                      <span class="attribute-option label-body col-sm-17">
+                        <div class="option-addon">
+                          1 Color
+                        </div>
+                      </span>
+                    </summary>
+                    <div>
+                      <div class="loading d-none" data-loading="options">
+                        <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                        <h6 class="text-primary">updating...</h6>
+                      </div>
+                      <div class="loaded row" data-loaded="options">
+                        <div class="col-sm-7">
+                        </div>
+                        <div class="item-option-group col-sm-17">
+                          <ul class="label-group">
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                None
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                1 Color
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                2 Colors
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                3 Colors
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                Full Color (CMYK + White)
+                              </label>
+                            </li><!--- END Option --->
+
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                  <details class="item-attribute label-item">
+                    <summary>
+                      <span class="attribute-title label-title col-sm-7">Back</span>
+                      <span class="attribute-option label-body col-sm-17">
+                        <div class="option-addon">
+                          None
+                        </div>
+                      </span>
+                    </summary>
+                    <div>
+                      <div class="loading d-none" data-loading="options">
+                        <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                        <h6 class="text-primary">updating...</h6>
+                      </div>
+                      <div class="loaded row" data-loaded="options">
+                        <div class="col-sm-7">
+                        </div>
+                        <div class="item-option-group col-sm-17">
+                          <ul class="label-group">
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                None
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                1 Color
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                2 Colors
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                3 Colors
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                4 Colors
+                              </label>
+                            </li><!--- END Option --->
+
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                Full Color (CMYK + White)
+                              </label>
+                            </li><!--- END Option --->
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                  <details class="item-attribute label-item">
+                    <summary>
+                      <span class="attribute-title label-title col-sm-7">Left Sleeve</span>
+                      <span class="attribute-option label-body col-sm-17">
+                        <div class="option-addon">
+                          None
+                        </div>
+                      </span>
+                    </summary>
+                    <div>
+                      <div class="loading d-none" data-loading="options">
+                        <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                        <h6 class="text-primary">updating...</h6>
+                      </div>
+                      <div class="loaded row" data-loaded="options">
+                        <div class="col-sm-7">
+                        </div>
+                        <div class="item-option-group col-sm-17">
+                          <ul class="label-group">
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                None
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                1 Color
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                2 Colors
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                3 Colors
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                4 Colors
+                              </label>
+                            </li><!--- END Option --->
+
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                  <details class="item-attribute label-item">
+                    <summary>
+                      <span class="attribute-title label-title col-sm-7">Right Sleeve</span>
+                      <span class="attribute-option label-body col-sm-17">
+                        <div class="option-addon">
+                          None
+                        </div>
+                      </span>
+                    </summary>
+                    <div>
+                      <div class="loading d-none" data-loading="options">
+                        <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                        <h6 class="text-primary">updating...</h6>
+                      </div>
+                      <div class="loaded row" data-loaded="options">
+                        <div class="col-sm-7">
+                        </div>
+                        <div class="item-option-group col-sm-17">
+                          <ul class="label-group">
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                None
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                1 Color
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                2 Colors
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                3 Colors
+                              </label>
+                            </li><!--- END Option --->
+                            <!--- Option --->
+                            <li class="item-option form-check form-check-inline check-label">
+                              <input class="option-value form-check-input" type="radio" id="option-1" name="option" value="100">
+                              <label class="option-title form-check-label label-item bg-light" for="option-1">
+                                4 Colors
+                              </label>
+                            </li><!--- END Option --->
+
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </li>
+
+              <li class="item-attribute-group list-group-item">
+                <div class="label-group">
+                  <div class="item-attribute label-item col-sm-12">
+                    <span class="attribute-title label-title col-sm-14">Set</span>
+                    <span class="attribute-option has-input label-body col-sm-10">
+                      <div class="row">
+                        <div class="col-sm">
+                          <div class="quantity">
+                            <input type="number" style="background: #FFFFFF" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            <input type="button" value="+" class="plus">
+                            <input type="button" value="-" class="minus">
+                          </div>
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-action-group list-group-item">
+                <style>
+                  .item-action-group {
+                    background: #FAFAFA;
+                  }
+                </style>
+                <div class="row py-2">
+                  <div class="col-sm-8">
+                    <button class="btn btn-lg btn-block bg-gradient bg-yellow">Buy Now</button>
+                  </div>
+                  <div class="col-sm-8">
+                    <button class="btn btn-lg btn-block bg-gradient bg-orange">Add to Cart</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </main>
+
+        </div><!--- END Item Card --->
+
+        <div class="item-toolbar col-sm-6">
+          <ul class="list-group list-group-flush" style="box-shadow:0 1px 1px 0 rgba(0,0,0,.05)">
+            <li class="list-group-item">
+              <div class="mb-3">
+                <small class="text-primary">
+                  <b>Delivery Options</b>
+                </small>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item py-1 px-0" style="border: none">
+                  <div class="row">
+                    <div class="col-sm-4 text-center p-1">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                      Free Delivery
+                      <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item py-1 px-0" style="border: none">
+                  <div class="row">
+                    <div class="col-sm-4 text-center p-1">
+                      <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                      Free Delivery
+                      <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item py-1 px-0" style="border: none">
+                  <div class="row">
+                    <div class="col-sm-4 text-center p-1">
+                      <i class="fas fa-hand-lizard"></i>
+                    </div>
+                    <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                      Free Delivery
+                      <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-sm-18 mt-4">
+          <style>
+            .tab-navs {
+              display: flex;
+              justify-content: center;
+            }
+            .tab-navs .tab-title {
+              color: #FFFFFF;
+              text-transform:uppercase;
+              padding: 5px 25px;
+              cursor: default;
+              border-radius:50px;
+              background: #05abe0;
+              background: -moz-linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              background: -webkit-linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              background: linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff541e', endColorstr='#f63657',GradientType=1 );
+            }
+            .tab-navs button.tab-title {
+              cursor: pointer;
+              box-shadow: none;
+              border: none;
+              transition: box-shadow 0.3s;
+              font-size: 14px
+            }
+            .tab-navs button.tab-title:hover {
+              outline: 0;
+              box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 10px inset !important;
+            }
+            .tab-navs button.tab-title:active {
+              outline: 0;
+              box-shadow: rgba(0, 0, 0, 0.3) 3px 3px 10px inset !important;
+            }
+            .tab-navs button.tab-title:focus {
+              outline: 0
+            }
+            .tab-navs .tabs{
+              font-size:14px;
+              list-style:none;
+              background: #FEE7E5;
+              box-shadow: rgba(250, 209, 206, 0.8) 3px 3px 10px inset;
+              display:inline-block;
+              border-radius:50px;
+              position:relative;
+            }
+            .tab-navs.tab-navs-light .tabs {
+              background: #FBF4F8 !important;
+              box-shadow: rgba(238, 56, 51, 0.2) 2px 2px 10px inset !important;
+            }
+            .tab-navs .tabs a{
+              text-decoration:none;
+              color: #EE3833 !important;
+              text-transform:uppercase;
+              padding: 5px 25px;
+              display:inline-block;
+              position:relative;
+              z-index:1;
+              transition-duration:0.6s;
+            }
+            .tab-navs .tabs a.active, .tab-navs .tabs a.active:hover {
+              color:#fff !important
+            }
+            .tab-navs .tabs a i{
+              margin-right:5px;
+            }
+            .tab-navs .tabs .selector{
+              height:100%;
+              display:inline-block;
+              position:absolute;
+              left:0px;
+              top:0px;
+              z-index:1;
+              border-radius:50px;
+              transition-duration:0.6s;
+              transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+              background: #05abe0;
+              background: -moz-linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              background: -webkit-linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              background: linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff541e', endColorstr='#f63657',GradientType=1 );
+            }
+          </style>
+          <script>
+            var tabs = $('.tabs');
+            var items = $('.tabs').find('a').length;
+            var selector = $(".tabs").find(".selector");
+            var activeItem = tabs.find('.active');
+            var activeWidth = activeItem.innerWidth();
+            $(".selector").css({
+              "left": activeItem.position.left + "px",
+              "width": activeWidth + "px"
+            });
+
+            $(".tabs").on("click","a",function(){
+
+              var activeWidth = $(this).innerWidth();
+              var itemPos = $(this).position();
+              $(".selector").css({
+                "left":itemPos.left + "px",
+                "width": activeWidth + "px"
+              });
+            });
+          </script>
+          <div class="card-group">
+            <ul class="card list-group list-group-flush py-3">
+              <li class="item-details list-group-item py-3" style="border: none;">
+                <a class="card-header d-block" data-toggle="collapse" href="#collapseItemDetails">
+                  <h5 class="m-0 d-flex flex-row justify-content-between">
+                    <small>Product Details</small>
+                    <small><i class="fas fa-chevron-down"></i></small>
+                  </h5>
+                </a>
+                <div class="card-body collapse show" id="collapseItemDetails">
+                  <div class="no-details d-flex flex-column justify-content-center align-items-center">
+                    <img style="width: 10%" src="https://image.flaticon.com/icons/svg/682/682033.svg">
+                    <h6 class="text-primary mt-3">No Description</h6>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-faq list-group-item py-3" style="border: none;">
+                <a class="card-header d-block" data-toggle="collapse" href="#collapseItemFaq">
+                  <h5 class="m-0 d-flex flex-row justify-content-between">
+                    <small>Frequent Ask Questions</small>
+                    <small><i class="fas fa-chevron-down"></i></small>
+                  </h5>
+                </a>
+                <div class="card-body collapse show" id="collapseItemFaq">
+                  <div class="no-faq d-flex flex-column justify-content-center align-items-center">
+                    <img style="width: 10%" src="https://image.flaticon.com/icons/svg/682/682040.svg">
+                    <h6 class="text-primary mt-3">No Frequent Ask Questions</h6>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div><!--- END Content Body --->
+
+  </div>

@@ -1,1 +1,1 @@
-This Directory contains static assets.
+This directory contains all static assets (css, js, images etc.).

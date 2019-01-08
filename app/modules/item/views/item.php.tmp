@@ -1,0 +1,1162 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed.');
+?>
+  <style>
+    .loading {
+      padding: 15px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .loading img {
+      margin-bottom: 10px;
+    }
+
+    .breadcrumb {
+      background: none;
+      padding: 0px;
+    }
+    .breadcrumb-item.active {
+      color: #EB3833;
+      font-weight: 600;
+    }
+    .breadcrumb-item + .breadcrumb-item::before {
+      font-weight:bold;
+      content:">"
+    }
+  </style>
+  <style>
+    .quantity {
+      display: inline-flex;
+      width: 100%;
+      margin: 0px auto;
+      background-color: #eee;
+      position: relative;
+      overflow: hidden;
+    }
+    .quantity input {
+      float: right;
+      color: #000;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      outline: 0;
+      background-color: #FFFFFF;
+    }
+    .quantity input.qty {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      padding: 5px 10px;
+      text-align: center;
+      font-weight: 400;
+      font-size: 1rem;
+      background-clip: padding-box;
+    }
+    .quantity .minus,
+    .quantity .plus {
+      position: absolute;
+      width: 25px;
+      height: 50%;
+      line-height: 0;
+      right: 0;
+      color: #bbb;
+      border-left: 1px solid rgba(222, 219, 221, 0.5);
+      background-clip: padding-box;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+      -webkit-background-size: 6px 30px;
+      -moz-background-size: 6px 30px;
+    }
+    .quantity .plus {
+      font-size: 25px;
+      padding: 2px;
+      padding-bottom: 6px;
+      top: 0;
+    }
+    .quantity .minus {
+      font-size: 32px;
+      padding: 2px;
+      padding-bottom: 8px;
+      bottom: 0;
+    }
+    .quantity .minus:hover, .quantity .plus:hover {
+      background-color: #FDF4F7;
+      cursor: pointer;
+      color: #EB3833;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $('.quantity').each(function() {
+        var spinner = jQuery(this),
+          input = spinner.find('.qty'),
+          btnUp = spinner.find('.plus'),
+          btnDown = spinner.find('.minus'),
+          min = input.attr('min'),
+          max = input.attr('max');
+
+        btnUp.click(function() {
+          var oldValue = parseFloat(input.val());
+          if (oldValue >= max) {
+            var newVal = oldValue;
+          } else {
+            var newVal = oldValue + 1;
+          }
+          spinner.find('.qty').val(newVal);
+          spinner.find('.qty').trigger("change");
+        });
+
+        btnDown.click(function() {
+          var oldValue = parseFloat(input.val());
+          if (oldValue <= min) {
+            var newVal = oldValue;
+          } else {
+            var newVal = oldValue - 1;
+          }
+          spinner.find('.qty').val(newVal);
+          spinner.find('.qty').trigger("change");
+        });
+
+      });
+
+      $('.qty').on('blur', function(){
+        var currQty = $('.qty').val();
+
+        if( currQty.startsWith('0') || isNaN(currQty) || currQty === '' ) {
+          $('.qty').val('1');
+          updateInfo();
+        }
+      });
+    });
+  </script>
+  <div class="container p-3 pb-5">
+    <!--- Content Topbar --->
+    <section class="content-topbar">
+      <div class="row">
+        <!--- Content Breadcrumb --->
+        <div class="content-breadcrumb col-sm-18">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Leaflet</a></li>
+            <li class="breadcrumb-item"><a href="#">Booklet</a></li>
+            <li class="breadcrumb-item active">A4 Perfect Binding Booklet</li>
+          </ol>
+        </div><!--- END Content Breadcrumb --->
+        <!--- TODO: Content Toolbar --->
+        <div class="content-toolbar col-sm-6">
+          <ul class="nav d-flex justify-content-end">
+          </ul>
+        </div><!--- END Content Breadcrumb --->
+      </div>
+    </section><!--- END Content Topbar --->
+
+    <!--- Content Header --->
+    <section class="content-header">
+    </section><!--- END Content Header --->
+
+    <!--- Content Body --->
+    <section class="content-body">
+      <div class="row">
+        <!--- Item Card --->
+        <main class="item-card card-group shadow col-sm-18">
+          <style>
+            /* Item Card */
+            .item-card,
+            .item-card-sidebar,
+            .item-card-main {
+              padding: 0px;
+            }
+          </style>
+          <!--- Item Card Sidebar --->
+          <div class="item-card-sidebar card col-sm-9">
+            <style>
+              /* Item Card Sidebar */
+              .item-card .item-card-sidebar .item-preview {
+                padding: 15px;
+              }
+              .item-card .item-card-sidebar .item-preview-indicators {
+                padding: 15px;
+                background-color: #F8F9FA;
+                border-bottom: 1px solid rgba(222, 219, 221, 0.5);
+              }
+              /* Item Card Main Section */
+
+            </style>
+            <div class="item-preview">
+              <img class="card-img" src="https://via.placeholder.com/1200x1200" alt="Card image cap">
+              <div class="card-img-overlay">
+              </div>
+            </div>
+            <div class="item-preview-indicators">
+            </div>
+          </div><!--- END Item Card Sidebar --->
+          <!--- Item Card Main Section --->
+          <div class="item-card-main card col-sm-15">
+            <style>
+              .item-card .item-card-main .list-group .list-group-item:first-of-type {
+                border-top: none;
+                margin-top: 5px;
+              }
+            </style>
+            <ul class="list-group list-group-flush">
+              <!--- Item Information --->
+              <li class="item-info-group list-group-item">
+                <style>
+                  .item-card .item-card-main .item-title {
+                    margin-bottom: 15px;
+                  }
+                  .item-card .item-card-main .item-price {
+                    position: relative;
+                    padding: 5px;
+                    margin-bottom: 15px;
+                    background: #FDF4F7;
+                    color: #EB3833;
+                  }
+                  .item-card .item-card-main .item-price .item-original-price {
+                    display: inline-block;
+                    text-decoration: line-through;
+                  }
+                </style>
+                <style>
+                  /* Created Using enjoycss.com */
+                  .item-price.orange-stripes {
+                    box-sizing: content-box !important;
+                    background: linear-gradient(90deg, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 0), rgb(255, 153, 0) !important;
+                    background-position: auto auto !important;
+                    background-origin: padding-box !important;
+                    background-clip: border-box !important;
+                    background-size: 50px auto !important;
+                    color: rgba(255, 255, 255, 0.9) !important;
+                  }
+                </style>
+                <h4 class="item-title">
+                  <span class="badge badge-primary">HOT SALE</span>
+                  <span class="title">A4 Perfect Binding Booklet</span>
+                </h4>
+                <div class="item-campaign-label"><!--- TODO: Campaign Label, e.g. 12.12, Christmas ---></div>
+                <div class="item-price">
+                  <div class="loading d-none" data-loading="price">
+                    <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                    <h6>updating price...</h6>
+                  </div>
+                  <div class="loaded visible"  data-loaded="price">
+                    <h2 class="item-total-price">
+                      RM <span>30.50</span>
+                    </h2>
+                    <h6 class="item-discount text-muted">
+                      <span class="item-original-price">RM <span>30.50</span></span>
+                      <span class="item-discount-percent badge badge-primary"><span>30</span>% OFF</span>
+                    </h6>
+                  </div>
+                </div>
+
+                <style>
+                  .item-card .item-card-main .item-info .label-group {
+                    margin: 0px;
+                  }
+                  .item-card .item-card-main .item-info .label-body {
+                    font-weight: bold;
+                  }
+                </style>
+                <div class="item-info">
+                  <ul class="label-group">
+                    <a href="#">
+                      <li class="label-item label-item-sm label-item-flush">
+                        <span class="label-title">Price per unit:</span>
+                        <span class="item-unit-price label-body">
+                          RM <span>1111.50</span>
+                        </span>
+                        <i class="far fa-question-circle ml-2"></i>
+                      </li>
+                    </a>
+                    <a href="#">
+                      <li class="label-item label-item-sm label-item-flush">
+                        <span class="label-title">Total Weight:</span>
+                        <span class="item-total-weight label-body">
+                          <span>117.00</span> KG
+                        </span>
+                        <i class="far fa-question-circle ml-2"></i>
+                      </li>
+                    </a>
+                    <a href="#">
+                      <li class="label-item label-item-sm label-item-flush">
+                        <span class="label-title">Estimated Delivery Day:</span>
+                        <span class="item-est-delivery label-body">
+                          <span>5</span> - <span>10</span> Days
+                        </span>
+                        <i class="far fa-question-circle ml-2"></i>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+              </li><!--- END Item Information --->
+
+              <!--- Item Attribute --->
+              <li class="item-attribute list-group-item">
+                <style>
+                  .list-group-heading,
+                  .list-group-heading small {
+                    margin-bottom: 15px;
+                    color: #EB3833;
+                    font-weight: bold;
+                  }
+                </style>
+                <style>
+                  .attribute-group {
+                    display: flex;
+                    flex-flow: row wrap;
+                    align-items: center;
+                    margin: .938rem 0;
+                    padding: 0px;
+                  }
+                  .attribute-group .attribute-item {
+                    margin-bottom: 10px;
+                  }
+
+                  .attribute-group .attribute-item {
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: row;
+                    width: 100%;
+                    padding: 0px;
+                    list-style: none;
+                    overflow: hidden;
+                    color: #495057;
+                    font-size: .938rem;
+                    line-height: 1.5;
+                    background-color: #fff;
+                    background-clip: padding-box;
+                    border: 1px solid #ced4da;
+                    border-radius: 0.25rem;
+                    -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+                    transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+                    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+                    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+                  }
+                  .attribute-group .attribute-item summary {
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: row;
+                  }
+                  .attribute-group .attribute-item .attribute-name .row,
+                  .attribute-group .attribute-item .attribute-option .row {
+                    height: 100%;
+                  }
+                  .attribute-group .attribute-item .attribute-name .row [class*="col-"],
+                  .attribute-group .attribute-item .attribute-option .row [class*="col-"] {
+                    display: flex;
+                    align-items: center;
+                  }
+                  .attribute-group .attribute-item:hover,
+                  .attribute-group .attribute-item.active {
+                    cursor: pointer;
+                    color: #EB3833;
+                    border: 1px solid #EB3833;
+                  }
+                  .attribute-group .attribute-item .attribute-name {
+                    display: flex;
+                    flex-direction: row;
+                    font-weight: bold;
+                    background: #F8F9FA;
+                    padding: 8px;
+                  }
+                  .attribute-group .attribute-item .attribute-option {
+                    display: flex;
+                    flex-direction: column;
+                    color: #EB3833;
+                    padding-left: 15px;
+                    margin-left: 0px;
+                    font-weight: bold;
+                  }
+                  .attribute-group .attribute-item .attribute-option.has-input {
+                    padding: 0px;
+                  }
+                  .attribute-group .attribute-item .attribute-option.has-input input[type=text] {
+                    background: none;
+                    padding: 8px 10px;
+                    width: 100%;
+                    margin: 0px;
+                    color: #212529;
+                    font-size: 1rem;
+                    border: none;
+                  }
+                  .attribute-group .attribute-item .attribute-option.has-input input[type=text]:active,
+                  .attribute-group .attribute-item .attribute-option.has-input input[type=text]:focus {
+                    outline: 0;
+                  }
+                  .attribute-group .attribute-item .attribute-option.has-input > *,
+                  .attribute-group .attribute-item .attribute-option.has-input [class*="col-"] {
+                    padding: 0px;
+                    margin: 0px;
+                  }
+                  .attribute-group .attribute-item .attribute-option.has-input .input-addon {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: normal;
+                    font-size: 1rem;
+                    color: #212529;
+                    background-color: #F8F9FA;
+                  }
+                </style>
+                <div class="list-group-heading">
+                  <small>Cover Information</small>
+                </div>
+                <div class="attribute-group">
+
+                  <!--- Text Field --->
+                  <div class="attribute-item">
+                    <span class="attribute-name col-sm-7">
+                      Text Field <a href="#"><i class="far fa-question-circle ml-2"></i></a>
+                    </span>
+                    <span class="attribute-option has-input col-sm-17">
+                      <div class="row">
+                        <div class="col-sm">
+                          <input type="text" placeholder="Text Field">
+                        </div>
+                      </div>
+                    </span>
+                  </div><!--- END Text Field --->
+
+                  <!--- Text Fields (Multiple) --->
+                  <div class="attribute-item">
+                    <div class="attribute-name col-sm-7">
+                      Text Fields
+                    </div>
+                    <div class="attribute-option has-input col-sm-17">
+                      <div class="row">
+                        <div class="col-sm">
+                          <input type="text" placeholder="Text Field 1">
+                        </div>
+                        <div class="col-sm-2 input-addon border-left border-right">x</div><!--- delimiter --->
+                        <div class="col-sm">
+                          <input type="text" placeholder="Text Field 2">
+                        </div>
+                        <div class="col-sm-4 input-addon border-left">gsm</div><!--- prefix/suffix --->
+                      </div>
+                    </div>
+                  </div><!--- END Text Fields (Multiple) --->
+
+                  <br>
+
+                  <!--- Number Field --->
+                  <div class="attribute-item">
+                    <span class="attribute-name col-sm-7">
+                      Number Field
+                    </span>
+                    <span class="attribute-option has-input col-sm-17">
+                      <div class="row">
+                        <div class="col-sm">
+                          <div class="quantity">
+                            <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            <input type="button" value="+" class="plus">
+                            <input type="button" value="-" class="minus">
+                          </div>
+                        </div>
+                      </div>
+                    </span>
+                  </div><!--- END Number Field --->
+
+                  <!--- Number Fields (Multiple) --->
+                  <div class="attribute-item">
+                    <span class="attribute-name col-sm-7">
+                      Number Fields
+                    </span>
+                    <span class="attribute-option has-input col-sm-17">
+                      <div class="row">
+                        <div class="col-sm-2 input-addon border-left border-right">
+                          S
+                        </div>
+                        <div class="col-sm">
+                          <div class="quantity">
+                            <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            <input type="button" value="+" class="plus">
+                            <input type="button" value="-" class="minus">
+                          </div>
+                        </div>
+                        <div class="col-sm-2 input-addon border-left border-right">
+                          M
+                        </div>
+                        <div class="col-sm">
+                          <div class="quantity">
+                            <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            <input type="button" value="+" class="plus">
+                            <input type="button" value="-" class="minus">
+                          </div>
+                        </div>
+                      </div>
+                    </span>
+                  </div><!--- END Number Input Multiple --->
+
+                  <br>
+
+                  <style>
+                    .attribute-item > div {
+                      position: relative;
+                    }
+                    .attribute-item .loading {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: center;
+                    }
+
+                    details.attribute-item[open] summary {
+                      border-bottom: 1px solid #dee2e6;
+                    }
+
+                    details.attribute-item[open] .attribute-option-selection {
+                      background-color: #FDFDFD;
+                    }
+                  </style>
+                  <details class="attribute-item">
+                    <summary>
+                      <span class="attribute-name col-sm-7">Shirt Size & Quantity</span>
+                      <span class="attribute-option col-sm-17">
+                        <div class="row h-100">
+                          <div class="option-addon">
+                            <span class="addon-text">XS: 3</span>
+                          </div>
+                          <div class="option-addon">
+                            <span class="addon-text">S: 3</span>
+                          </div>
+                          <div class="option-addon">
+                            <span class="addon-text">M: 5</span>
+                          </div>
+                          <div class="option-addon">
+                            <span class="addon-text">L: 3</span>
+                          </div>
+                          <div class="option-addon">
+                            <span class="addon-text">XL: 3</span>
+                          </div>
+                          <div class="option-addon">
+                            <span class="addon-text">XXL: 3</span>
+                          </div>
+                        </div>
+                      </span>
+                    </summary>
+                    <div class="attribute-option-selection">
+                      <div class="loading d-none" data-loading="options">
+                        <img class="w-25" src="<?php echo asset_url('img/common/loading.svg'); ?>">
+                        <h6 class="text-primary">updating...</h6>
+                      </div>
+                      <div class="loaded visible row" data-loaded="options">
+                        <div class="col-sm-7" style="font-weight: bold; padding: 20px;">Popular Options</div>
+                        <ul class="option-group label-group col-sm-17">
+                          <style>
+                            .attribute-item .attribute-option-selection .option-group {
+                              padding: 15px;
+                              list-style: none;
+                            }
+
+                            .attribute-item .attribute-option-selection .option-group .option-name {
+                              background: #FFFFFF;
+                            }
+                            details.attribute-item .attribute-option-selection .option-group .option-name {
+                              background: #FDFDFD;
+                            }
+                            .attribute-item .attribute-option-selection .option-group .option-name.has-addon {
+                              padding: 0px !important;
+                            }
+                            .attribute-item .attribute-option-selection .option-group .option-name.has-input {
+                              border: none;
+                              background: none;
+                            }
+                            .option-addon {
+                              display: inline-flex;
+                              flex-direction: row;
+                              flex-wrap: wrap;
+                              padding: 5px;
+                            }
+                            .option-addon .addon-image img,
+                            .option-addon .addon-color {
+                              width: 30px;
+                              height: 30px;
+                            }
+                            .option-addon .addon-color {
+                              border-radius: 5px;
+                            }
+                            .option-addon .addon-text {
+                              display: flex;
+                              flex-direction: row;
+                              justify-content: center;
+                              align-items: center;
+                              padding: 0px 10px;
+                            }
+
+                            .option-addon .addon-input {
+                              display: inline-block !important;
+                              width: 50px;
+                              background: #FDFDFD;
+                            }
+                            .option-addon .addon-input.addon-input-xs {
+                              width: 10px;
+                            }
+                            .option-addon .addon-input.addon-input-sm {
+                              width: 25px;
+                            }
+                            .option-addon .addon-input.addon-input-lg {
+                              width: 75px;
+                            }
+                            .option-addon .addon-input.addon-input-xl {
+                              width: 100px;
+                            }
+
+                            .option-addon .addon-input.quantity {
+                              border: 1px solid #ced4da;
+                              border-radius: .25rem;
+                              transition: border-color 0.15s ease-in-out;
+                            }
+                            .option-addon .addon-input.quantity input.qty {
+                              height: 35px;
+                              font-size: 15px;
+                              padding: 0px 10px;
+                              font-size: 1rem;
+                            }
+                            .option-addon .addon-input.quantity .minus,
+                            .option-addon .addon-input.quantity .plus {
+                              width: 25px;
+                              -webkit-background-size: 6px 30px;
+                              -moz-background-size: 6px 30px;
+                            }
+                            .option-addon .addon-input.quantity .plus {
+                              font-size: 25px;
+                              padding: 2px;
+                              padding-bottom: 6px;
+                            }
+                            .option-addon .addon-input.quantity .minus {
+                              font-size: 32px;
+                              padding: 2px;
+                              padding-bottom: 8px;
+                            }
+                          </style>
+
+                          <!--- Option --->
+                          <li class="option-item label-input-group">
+                            <input class="option-value label-input" type="radio" id="option-test" name="option" value="100">
+                            <label class="option-name label-item" for="option-test">
+                              100
+                            </label>
+                          </li><!--- END Option --->
+
+                          <!--- Option With Image Addon --->
+                          <li class="option-item label-input-group">
+                            <input class="option-value label-input" type="radio" id="option-2" name="option" value="100">
+                            <label class="option-name has-addon label-item" for="option-2">
+                              <div class="option-addon">
+                                <span class="addon-image"><img src="https://via.placeholder.com/30x30"></span>
+                                <span class="addon-text">aa</span>
+                              </div>
+                            </label>
+                          </li><!--- END Option With Image Addon --->
+
+                          <!--- Option With Color Addon --->
+                          <li class="option-item label-input-group">
+                            <input class="option-value label-input" type="radio" id="option-2" name="option" value="100">
+                            <label class="option-name has-addon label-item" for="option-2">
+                              <div class="option-addon">
+                                <span class="addon-color border" style="background: #EB3833"></span>
+                                <span class="addon-text">aa</span>
+                              </div>
+                            </label>
+                          </li><!--- END Option With Color Addon --->
+
+                          <!--- Option With Text Field --->
+                          <li class="option-item label-input-group">
+                            <div class="option-name has-addon has-input label-item">
+                              <div class="option-addon">
+                                <div class="addon-text col-sm-5">XS: </div>
+                                <input type="text" class="col-sm addon-input addon-input-xl form-control form-control-sm no-outline">
+                              </div>
+                            </div>
+                          </li><!--- END Option With Text Field --->
+
+
+                          <!--- Option With Number Field --->
+                          <li class="option-item label-input-group">
+                            <div class="option-name has-addon has-input label-item">
+                              <div class="option-addon">
+                                <div class="addon-text col-sm-5">XS: </div>
+                                <div class="addon-input addon-input-lg quantity">
+                                  <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                  <input type="button" value="+" class="plus">
+                                  <input type="button" value="-" class="minus">
+                                </div>
+                              </div>
+                            </div>
+                          </li><!--- END Option With Number Field --->
+
+                        </ul>
+                      </div>
+                    </div>
+                  </details>
+
+                  <br>
+
+                  <div class="attribute-item">
+                    <span class="attribute-name col-sm-7">Shirt Size & Quantity</span>
+                    <span class="attribute-option attribute-option-selection col-sm-17">
+                      <ul class="option-group label-group p-2">
+                        <!--- T-Shirt Demo --->
+                        <li class="option-item label-input-group">
+                          <input class="option-value label-input" type="radio" id="option-test" name="option" value="100">
+                          <label class="option-name label-item" for="option-test">
+                            <div class="option-addon">
+                              <span class="addon-color border" style="background: #EB3833"></span>
+                            </div>
+                            Orange #EB3833
+                            <div class="option-addon">
+                              <div class="addon-input addon-input-lg quantity">
+                                <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="button" value="+" class="plus">
+                                <input type="button" value="-" class="minus">
+                              </div>
+                            </div>
+                          </label>
+                        </li><!--- END T-Shirt Demo --->
+
+                        <!--- Option --->
+                        <li class="option-item label-input-group">
+                          <input class="option-value label-input" type="radio" id="option-test" name="option" value="100">
+                          <label class="option-name label-item" for="option-test">
+                            100
+                          </label>
+                        </li><!--- END Option --->
+
+                        <!--- Option With Image Addon --->
+                        <li class="option-item label-input-group">
+                          <input class="option-value label-input" type="radio" id="option-2" name="option" value="100">
+                          <label class="option-name has-addon label-item" for="option-2">
+                            <div class="option-addon">
+                              <span class="addon-image"><img src="https://via.placeholder.com/30x30"></span>
+                              <span class="addon-text">aa</span>
+                            </div>
+                          </label>
+                        </li><!--- END Option With Image Addon --->
+
+                        <!--- Option With Color Addon --->
+                        <li class="option-item label-input-group">
+                          <input class="option-value label-input" type="radio" id="option-2" name="option" value="100">
+                          <label class="option-name has-addon label-item" for="option-2">
+                            <div class="option-addon">
+                              <span class="addon-color border" style="background: #EB3833"></span>
+                              <span class="addon-text">aa</span>
+                            </div>
+                          </label>
+                        </li><!--- END Option With Color Addon --->
+
+                        <!--- Option With Text Field --->
+                        <li class="option-item label-input-group">
+                          <div class="option-name has-addon has-input label-item">
+                            <div class="option-addon">
+                              <div class="addon-text col-sm-5">XS: </div>
+                              <input type="text" class="col-sm addon-input addon-input-xl form-control form-control-sm no-outline">
+                            </div>
+                          </div>
+                        </li><!--- END Option With Text Field --->
+
+
+                        <!--- Option With Number Field --->
+                        <li class="option-item label-input-group">
+                          <div class="option-name has-addon has-input label-item">
+                            <div class="option-addon">
+                              <div class="addon-text col-sm-5">XS: </div>
+                              <div class="addon-input addon-input-lg quantity">
+                                <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="button" value="+" class="plus">
+                                <input type="button" value="-" class="minus">
+                              </div>
+                            </div>
+                          </div>
+                        </li><!--- END Option With Number Field --->
+                      </ul>
+                    </span>
+                  </div>
+
+                  <br>
+
+                  <div class="attribute-item">
+                    <span class="attribute-name col-sm-7">Shirt Size & Quantity</span>
+                    <span class="attribute-option attribute-option-selection col-sm-17">
+                      <ul class="option-group label-group p-2">
+                        <!--- T-Shirt Demo --->
+                        <li class="option-item label-input-group">
+                          <input class="option-value label-input" type="radio" id="option-orange" name="option" value="100">
+                          <label class="option-name label-item" for="option-orange">
+                            <div class="option-addon">
+                              <span class="addon-color border" style="background: #EB3833"></span>
+                            </div>
+                            Orange #EB3833
+                            <div class="option-addon ml-auto">
+                              <div class="addon-input addon-input-lg quantity">
+                                <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="button" value="+" class="plus">
+                                <input type="button" value="-" class="minus">
+                              </div>
+                            </div>
+                          </label>
+                        </li><!--- END T-Shirt Demo --->
+
+                        <!--- T-Shirt Demo --->
+                        <li class="option-item label-input-group">
+                          <input class="option-value label-input" type="radio" id="option-pink" name="option" value="100">
+                          <label class="option-name label-item" for="option-pink">
+                            <div class="option-addon">
+                              <span class="addon-color border" style="background: #FA5656"></span>
+                            </div>
+                            Pink #FA5656
+                            <div class="option-addon ml-auto">
+                              <div class="addon-input addon-input-lg quantity">
+                                <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="button" value="+" class="plus">
+                                <input type="button" value="-" class="minus">
+                              </div>
+                            </div>
+                          </label>
+                        </li><!--- END T-Shirt Demo --->
+
+                        <!--- T-Shirt Demo --->
+                        <li class="option-item label-input-group">
+                          <input class="option-value label-input" type="radio" id="option-white" name="option" value="100">
+                          <label class="option-name label-item" for="option-white">
+                            <div class="option-addon">
+                              <span class="addon-color border" style="background: #FFFFFF"></span>
+                            </div>
+                            White #FFFFFF
+                            <div class="option-addon ml-auto">
+                              <div class="addon-input addon-input-lg quantity">
+                                <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="button" value="+" class="plus">
+                                <input type="button" value="-" class="minus">
+                              </div>
+                            </div>
+                          </label>
+                        </li><!--- END T-Shirt Demo --->
+
+                      </ul>
+                    </span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-attribute list-group-item">
+                <div class="attribute-group">
+                  <style>
+                    .attribute-group > [class*="col-"]:first-of-type {
+                      padding-left: 0px;
+                    }
+                    .attribute-group > [class*="col-"]:last-of-type {
+                      padding-right: 0px;
+                    }
+                  </style>
+                  <div class="col-sm-8">
+                    <div class="attribute-item">
+                      <span class="attribute-name col-sm-14">Quantity</span>
+                      <span class="attribute-option has-input col-sm-10">
+                        <div class="row">
+                          <div class="col-sm">
+                            <div class="quantity">
+                              <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                              <input type="button" value="+" class="plus">
+                              <input type="button" value="-" class="minus">
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="attribute-item">
+                      <span class="attribute-name col-sm-14">Quantity</span>
+                      <span class="attribute-option has-input col-sm-10">
+                        <div class="row">
+                          <div class="col-sm">
+                            <div class="quantity">
+                              <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                              <input type="button" value="+" class="plus">
+                              <input type="button" value="-" class="minus">
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="attribute-item">
+                      <span class="attribute-name col-sm-14">Quantity</span>
+                      <span class="attribute-option has-input col-sm-10">
+                        <div class="row">
+                          <div class="col-sm">
+                            <div class="quantity">
+                              <input type="number" value="1" class="qty" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                              <input type="button" value="+" class="plus">
+                              <input type="button" value="-" class="minus">
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-action-group list-group-item">
+                <style>
+                  .item-action-group {
+                    background: #F8F9FA;
+                  }
+                </style>
+                <div class="row py-2">
+                  <div class="col-sm-8">
+                    <button class="btn btn-lg btn-block bg-gradient bg-yellow">Buy Now</button>
+                  </div>
+                  <div class="col-sm-8">
+                    <button class="btn btn-lg btn-block bg-gradient bg-orange">Add to Cart</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div><!--- END Item Card Main Section --->
+        </main><!--- END Item Card --->
+
+        <!--- Item Toolbar --->
+        <aside class="item-toolbar col-sm-6 mt-3">
+          <style>
+            .item-toolbar .item-tool + .item-tool {
+              margin-top: 15px;
+            }
+          </style>
+          <div class="item-tool shadow-sm">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="mb-3">
+                  <small class="text-primary">
+                    <b>Delivery Options</b>
+                  </small>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item py-1 px-0" style="border: none">
+                    <div class="row">
+                      <div class="col-sm-4 text-center p-1">
+                        <i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                        Free Delivery
+                        <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item py-1 px-0" style="border: none">
+                    <div class="row">
+                      <div class="col-sm-4 text-center p-1">
+                        <i class="fas fa-truck"></i>
+                      </div>
+                      <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                        Free Delivery
+                        <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item py-1 px-0" style="border: none">
+                    <div class="row">
+                      <div class="col-sm-4 text-center p-1">
+                        <i class="fas fa-hand-lizard"></i>
+                      </div>
+                      <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                        Free Delivery
+                        <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!--- TODO: Unit Converter --->
+          <div class="item-tool shadow-sm">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"></li>
+            </ul>
+          </div><!--- END Unit Converter --->
+          <!--- TODO: Size Chart --->
+          <div class="item-tool shadow-sm">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"></li>
+            </ul>
+          </div><!--- END Size Chart --->
+          <!--- TODO: Artwork Guide --->
+          <div class="item-tool shadow-sm">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"></li>
+            </ul>
+          </div><!--- END Artwork Guide --->
+        </aside><!--- END Item Toolbar --->
+
+        <div class="item-info-card card-group col-sm-18 mt-4">
+          <style>
+            .tab-navs {
+              display: flex;
+              justify-content: center;
+            }
+            .tab-navs .tab-title {
+              color: #FFFFFF;
+              text-transform:uppercase;
+              padding: 5px 25px;
+              cursor: default;
+              border-radius:50px;
+              background: #05abe0;
+              background: -moz-linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              background: -webkit-linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              background: linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff541e', endColorstr='#f63657',GradientType=1 );
+            }
+            .tab-navs button.tab-title {
+              cursor: pointer;
+              box-shadow: none;
+              border: none;
+              transition: box-shadow 0.3s;
+              font-size: 14px
+            }
+            .tab-navs button.tab-title:hover {
+              outline: 0;
+              box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 10px inset !important;
+            }
+            .tab-navs button.tab-title:active {
+              outline: 0;
+              box-shadow: rgba(0, 0, 0, 0.3) 3px 3px 10px inset !important;
+            }
+            .tab-navs button.tab-title:focus {
+              outline: 0
+            }
+            .tab-navs .tabs{
+              font-size:14px;
+              list-style:none;
+              background: #FEE7E5;
+              box-shadow: rgba(250, 209, 206, 0.8) 3px 3px 10px inset;
+              display:inline-block;
+              border-radius:50px;
+              position:relative;
+            }
+            .tab-navs.tab-navs-light .tabs {
+              background: #FBF4F8 !important;
+              box-shadow: rgba(238, 56, 51, 0.2) 2px 2px 10px inset !important;
+            }
+            .tab-navs .tabs a{
+              text-decoration:none;
+              color: #EE3833 !important;
+              text-transform:uppercase;
+              padding: 5px 25px;
+              display:inline-block;
+              position:relative;
+              z-index:1;
+              transition-duration:0.6s;
+            }
+            .tab-navs .tabs a.active, .tab-navs .tabs a.active:hover {
+              color:#fff !important
+            }
+            .tab-navs .tabs a i{
+              margin-right:5px;
+            }
+            .tab-navs .tabs .selector{
+              height:100%;
+              display:inline-block;
+              position:absolute;
+              left:0px;
+              top:0px;
+              z-index:1;
+              border-radius:50px;
+              transition-duration:0.6s;
+              transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+              background: #05abe0;
+              background: -moz-linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              background: -webkit-linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              background: linear-gradient(
+                    to right bottom,
+                    #ff541e, #ff4835, #fc3d47, #f63657
+              );
+              filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff541e', endColorstr='#f63657',GradientType=1 );
+            }
+          </style>
+          <script>
+            var tabs = $('.tabs');
+            var items = $('.tabs').find('a').length;
+            var selector = $(".tabs").find(".selector");
+            var activeItem = tabs.find('.active');
+            var activeWidth = activeItem.innerWidth();
+            $(".selector").css({
+              "left": activeItem.position.left + "px",
+              "width": activeWidth + "px"
+            });
+
+            $(".tabs").on("click","a",function(){
+
+              var activeWidth = $(this).innerWidth();
+              var itemPos = $(this).position();
+              $(".selector").css({
+                "left":itemPos.left + "px",
+                "width": activeWidth + "px"
+              });
+            });
+          </script>
+          <ul class="card list-group list-group-flush py-3 shadow-sm">
+            <li class="item-details list-group-item py-3" style="border: none;">
+              <a class="card-header d-block" data-toggle="collapse" href="#collapseItemDetails">
+                <h5 class="m-0 d-flex flex-row justify-content-between">
+                  <small>Product Details</small>
+                  <small><i class="fas fa-chevron-down"></i></small>
+                </h5>
+              </a>
+              <div class="card-body collapse show" id="collapseItemDetails">
+                <div class="no-details d-flex flex-column justify-content-center align-items-center">
+                  <img style="width: 10%" src="https://image.flaticon.com/icons/svg/682/682033.svg">
+                  <h6 class="text-primary mt-3">No Description</h6>
+                </div>
+              </div>
+            </li>
+
+            <li class="item-faq list-group-item py-3" style="border: none;">
+              <a class="card-header d-block" data-toggle="collapse" href="#collapseItemFaq">
+                <h5 class="m-0 d-flex flex-row justify-content-between">
+                  <small>Frequent Ask Questions</small>
+                  <small><i class="fas fa-chevron-down"></i></small>
+                </h5>
+              </a>
+              <div class="card-body collapse show" id="collapseItemFaq">
+                <div class="no-faq d-flex flex-column justify-content-center align-items-center">
+                  <img style="width: 10%" src="https://image.flaticon.com/icons/svg/682/682040.svg">
+                  <h6 class="text-primary mt-3">No Frequent Ask Questions</h6>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </div>
+    </section><!--- END Content Body --->
+
+    <!--- Content Footer --->
+    <section class="content-footer">
+    </section><!--- END Content Footer --->
+
+  </div>

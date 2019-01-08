@@ -1,1 +1,0 @@
-This Directory houses core modules.

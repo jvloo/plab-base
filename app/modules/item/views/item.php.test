@@ -1,0 +1,501 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed.');
+?>
+<section class="section-content bg-gradient bg-light">
+  <div class="container p-3 pb-5">
+    <style>
+      .card-group {
+        box-shadow:0 1px 1px 0 rgba(0,0,0,.05)
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+      }
+      .card,
+      .card-header,
+      .card-body,
+      .card-footer,
+      .list-group-item {
+        border-color: rgba(222, 219, 221, 0.3);
+      }
+      .breadcrumb-item + .breadcrumb-item::before {
+        font-weight:bold;
+        content:">"
+      }
+    </style>
+
+    <div class="content-topbar">
+      <?php if( ! empty($breadcrumb) ) : ?>
+      <nav aria-label="breadcrumb">
+
+        <ol class="breadcrumb p-0 px-3" style="background: none">
+          <?php
+            foreach( $breadcrumb as $index => $bc_item ) :
+              end($breadcrumb);
+              $last_index = key($breadcrumb);
+          ?>
+            <?php if ($index == $last_index) : ?>
+              <li class="breadcrumb-item active text-primary" aria-current="page" style="font-weight: 600"><?php echo $bc_item['label']; ?></li>
+            <?php else : ?>
+              <li class="breadcrumb-item"><a href="<?php echo $bc_item['link']; ?>"><?php echo $bc_item['label']; ?></a></li>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </ol>
+      </nav>
+      <?php endif; ?>
+    </div>
+
+    <div class="content-header">
+    </div>
+
+    <div class="content-body">
+      <div class="row">
+        <div class="col-sm-18">
+          <div class="card-group">
+
+            <div class="card col-sm-9 p-0">
+              <div class="item-gallery p-3">
+                <img class="card-img" src="<?php echo $item['preview'][0]['source']; ?>" alt="Card image cap">
+                <div class="card-img-overlay">
+                </div>
+              </div>
+              <div class="card-footer" style="background-color: #FAFAFA">
+              </div>
+            </div>
+
+            <div class="card col-sm-15 p-0">
+              <div class="card-body px-4">
+                <h4 class="item-name">
+                  <span class="badge badge-primary">HOT SALE</span>
+                  <?php echo $item['name']; ?>
+                </h4>
+                <div class="item-value p-2 my-3" style="background-color: #FDF4F7">
+                  <h3 class="item-price text-primary total-price">RM 0.00</h3>
+                  <h6 class="item-original-price text-muted total-discount d-none">
+                    <s>RM 30.50</s>
+                    <span class="badge badge-primary">30% OFF</span>
+                  </h6>
+                </div>
+                <div class="item-info">
+                  <ul class="label-group">
+                    <a href="#">
+                      <li class="label-item label-item-sm label-item-flush">
+                        <span class="label-titlee">Price per unit:</span>
+                        <span class="label-body unit-price" style="font-weight: bold">
+                          <span>RM 0.00</span>
+                        </span>
+                        <i class="far fa-question-circle ml-2"></i>
+                      </li>
+                    </a>
+                    <a href="#">
+                      <li class="label-item label-item-sm label-item-flush">
+                        <span class="label-title">Total Weight:</span>
+                        <span class="label-body total-weight" style="font-weight: bold">
+                          <span>0.00 KG</span>
+                        </span>
+                        <i class="far fa-question-circle ml-2"></i>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+
+                <div class="item-attribute">
+                  <div class="label-group">
+                    <style>
+                      details summary {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        outline: 0;
+                      }
+                      .label-group details + details {
+                        margin-top: 15px;
+                      }
+                      details summary::-webkit-details-marker {
+                        display: none;
+                      }
+                      details summary::after {
+                        position: absolute;
+                        right: 0px;
+                        font-family: "Font Awesome 5 Free";
+                        font-weight: 900;
+                        content: "\f078";
+                      }
+                      details:hover,
+                      details[open] {
+                        background-color: #FAFAFA !important;
+                        box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.2);
+                      }
+                      details[open] summary::after {
+                        content: "\f077";
+                      }
+
+                    </style>
+                    <?php
+                    foreach ($item['spec_groups'] as $g_index => $group) :
+                      if( ! empty($group['specs']) ) :
+                        foreach( $group['specs'] as $s_index => $spec ) :
+                    ?>
+                    <details id="spec-<?php echo $spec["spec_id"]; ?>" class="label-item w-100 p-0 pr-3" style="overflow: hidden"<?php echo ($g_index === 0 && $s_index === 0) ? ' open' : ''; ?>>
+                      <summary class="row p-0 m-0">
+                        <span class="label-title col-sm-6 m-0 bg-light p-2"><?php echo ucwords($spec["name"]) . ': '; ?></span>
+                        <span class="label-body col-sm-18 pl-3">
+                          <b><span id="spec-<?php echo $spec["spec_id"]; ?>-chosen"></span></b>
+                        </span>
+                      </summary>
+                      <div class="row">
+                        <div class="col-sm-5">
+                        </div>
+                        <div class="col-sm-19">
+                          <ul class="label-group">
+                            <?php foreach( $spec['options'] as $o_index => $option ) : ?>
+                            <li class="form-check form-check-inline check-label">
+                              <input class="form-check-input" type="radio" name="spec-<?php echo $spec["spec_id"]; ?>" id="option-<?php echo $option["option_id"]; ?>" value="<?php echo $option["value"]; ?>" autocomplete="off" onclick="updateSpecData(this);"<?php echo $o_index === 0 ? ' checked' : ''; ?>>
+                              <label class="form-check-label label-item label-item-sm bg-light" for="option-<?php echo $option["option_id"]; ?>">
+                                <?php echo $option['prefix_or_true'] . ' ' . $option['value'] . ' ' . $option['suffix_or_false']; ?>
+                              </label>
+                            </li>
+                            <?php endforeach; ?>
+                          </ul>
+                        </div>
+                      </div>
+                    </details>
+                    <?php endforeach; endif; endforeach; ?>
+                  </div>
+                </div>
+
+                <div class="item-order-quantity">
+                  <style>
+                    .item-order-quantity .quantity-wrapper {
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                      padding: 0 .750rem;
+                      padding-right: 0;
+                      font-size: .938rem;
+                      line-height: 1.5;
+                      overflow: hidden;
+                      color: #495057;
+                      background-color: #fff;
+                      background-clip: padding-box;
+                      border: 1px solid #ced4da;
+                      border-radius: 0.25rem;
+                      -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+                      transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+                      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+                      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+                    }
+                    .item-order-quantity .quantity-wrapper label {
+                      display: inline-flex;
+                      align-items: center;
+                      font-weight: bold;
+                      padding: .375rem 0;
+                      margin: 0px;
+                    }
+                    .quantity {
+                      width: 100%;
+                      position: relative;
+                      display: inline-flex;
+                    }
+                    .quantity input {
+                      text-align: center;
+                      background-color: #FFFFFF;
+                      color: #000;
+                    }
+                    .quantity input.qty {
+                      position: relative;
+                      border: 0;
+                      width: 100%;
+                      padding: 5px 10px;
+                      text-align: center;
+                      font-weight: 400;
+                      font-size: 1rem;
+                    }
+                    .quantity .minus, .quantity .plus {
+                      color: #bbb;
+                      font-size: 26px;
+                      padding: 2px;
+                      padding-bottom: 6px;
+                    }
+                    .quantity .minus {
+                      font-size: 32px;
+                      padding: 2px;
+                      padding-bottom: 8px;
+                    }
+                    .quantity .minus:hover, .quantity .plus:hover {
+                      background-color: #FDF4F7;
+                      cursor: pointer;
+                      color: #EB3833;
+                    }
+                  </style>
+                  <div class="quantity-wrapper col-sm-10 p-0">
+                    <label class="col-sm-14 bg-light m-0 p-2">
+                      Set
+                    </label>
+                    <div class="col-sm-10 p-0">
+                      <div class="quantity">
+                        <input type="number" class="qty" value="1" step="1" min="1" max="9999" maxLength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onchange="updateSpecData();">
+                        <input type="button" value="+" class="plus" onclick="updateSpecData();">
+                        <input type="button" value="-" class="minus" onclick="updateSpecData();">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <ul class="list-group list-group-flush">
+                <li class="item-action list-group-item" style="background-color: #FAFAFA">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <button class="btn btn-lg btn-block bg-gradient bg-yellow">Buy Now</button>
+                    </div>
+                    <div class="col-sm-8">
+                      <button class="btn btn-lg btn-block bg-gradient bg-orange" onclick="addCart();">Add to Cart</button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <ul class="list-group list-group-flush" style="box-shadow:0 1px 1px 0 rgba(0,0,0,.05)">
+            <li class="list-group-item">
+              <div class="mb-3">
+                <small class="text-primary">
+                  <b>Delivery Options</b>
+                </small>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item py-1 px-0" style="border: none">
+                  <div class="row">
+                    <div class="col-sm-4 text-center p-1">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                      Free Delivery
+                      <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item py-1 px-0 d-none" style="border: none">
+                  <div class="row">
+                    <div class="col-sm-4 text-center p-1">
+                      <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                      Free Delivery
+                      <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item py-1 px-0 d-none" style="border: none">
+                  <div class="row">
+                    <div class="col-sm-4 text-center p-1">
+                      <i class="fas fa-hand-lizard"></i>
+                    </div>
+                    <div class="col-sm-20" style="font-size: 1rem; font-weight: 500;">
+                      Free Delivery
+                      <p class="text-primary"><small style="font-weight: 500;">within Peninsalur Malaysia</small></p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <div class="modal fade" id="add-cart-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Notice</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center mt-3" id="modal-body">
+          <h5 class="color-orange text-center"></h5>
+          <small></small>
+        </div>
+        <div class="modal-footer mx-auto mb-3">
+          <button onclick="window.location.href='<?php echo site_url("cart/my"); ?>';" type="button" class="btn bg-gradient bg-orange text-white mr-2">Go To Cart</button>
+          <button type="button" class="btn bg-gradient bg-yellow text-white" data-dismiss="modal">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  var specStatus = {};
+
+  function updateSpecData() {
+    <?php foreach( $item['spec_groups'] as $g_index => $group ) : ?>
+      specStatus[<?php echo $g_index; ?>] = {groupID: <?php echo $group['spec_group_id']; ?>};
+      specStatus[<?php echo $g_index; ?>]['specs'] = {};
+
+      <?php if( ! empty($group['specs']) ) : foreach( $group['specs'] as $s_index => $spec ) : ?>
+
+        specStatus[<?php echo $g_index; ?>]['specs'][<?php echo $s_index; ?>] = {specID: '<?php echo $spec['spec_id']; ?>', name: "<?php echo $spec['name']; ?>"};
+
+        <?php foreach( $spec['options'] as $o_index => $option ) : switch($option['type']) :
+          case 'label':
+        ?>
+
+          var spec<?php echo $spec['spec_id']; ?> = document.getElementsByName('spec-<?php echo $spec['spec_id']; ?>');
+          for (var i = 0, length = spec<?php echo $spec['spec_id']; ?>.length; i < length; i++) {
+            if (spec<?php echo $spec['spec_id']; ?>[i].checked) {
+
+              var spec<?php echo $spec['spec_id']; ?>Label = spec<?php echo $spec['spec_id']; ?>[i].getAttribute('id');
+              var spec<?php echo $spec['spec_id']; ?>Chosen = $("label[for='" + spec<?php echo $spec['spec_id']; ?>Label + "']").html().trim();
+
+              $("#spec-<?php echo $spec['spec_id']; ?>-chosen").html(spec<?php echo $spec['spec_id']; ?>Chosen);
+
+              specStatus[<?php echo $g_index; ?>]['specs'][<?php echo $s_index; ?>]['value'] = spec<?php echo $spec['spec_id']; ?>[i].value;
+              <?php if( $spec['name'] == 'quantity' ) : ?>
+              specStatus[<?php echo $g_index; ?>]['quantity'] = spec<?php echo $spec['spec_id']; ?>[i].value;
+              <?php endif; ?>
+              break;
+            }
+          }
+
+        <?php break; case 'number': ?>
+
+          var option<?php echo $option['option_id']; ?>Value = $('#option-<?php echo $option['option_id']; ?>').val()
+          specStatus[<?php echo $g_index; ?>]['specs'][<?php echo $s_index; ?>]['value'][<?php echo $o_index; ?>] = option<?php echo $option['option_id']; ?>Value;
+
+        <?php break; case 'boolean': ?>
+
+          var option<?php echo $option['option_id']; ?> = document.getElementsByName('option-<?php echo $option['option_id']; ?>');
+          for (var i = 0, length = option<?php echo $option['option_id']; ?>.length; i < length; i++) {
+            if (option<?php echo $option['option_id']; ?>[i].checked) {
+
+              var option<?php echo $option['option_id']; ?>Chosen = option<?php echo $option['option_id']; ?>[i].value;
+
+              $("#spec-<?php echo $spec['spec_id']; ?>-chosen").html(option<?php echo $option['option_id']; ?>Chosen);
+
+              specStatus[<?php echo $g_index; ?>]['specs'][<?php echo $s_index; ?>]['value'] = option<?php echo $option['option_id']; ?>Chosen;
+
+              break;
+            }
+          }
+
+        <?php
+          break;
+          endswitch;
+          endforeach;
+        ?>
+      <?php endforeach; endif; ?>
+    <?php endforeach; ?>
+
+    //console.log(specStatus);
+
+    // For DEBUG use
+    //var json = JSON.stringify(specStatus, null, 2); // spacing level = 2
+    //var win = window.open();
+    //win.document.write(json);
+    $.post("<?php echo site_url('item/getSpecData'); ?>", {
+      itemID: "<?php echo $item['item_id']; ?>",
+      specsData: specStatus,
+    })
+    .done(function(data) {
+      console.log(data);
+      var data = JSON.parse(data);
+      var orderQuantity = parseInt( $('.qty').val() );
+
+      if( orderQuantity <= 0 || data === null ) {
+        var totalPrice = unitPrice = 'RM ---.--';
+        var totalWeight = '---.-- kg';
+        var estDelivery = 'N/A';
+
+      } else {
+        var totalPrice = 'RM ' + (parseFloat(data['spec']['total_price']).toFixed(2) * orderQuantity);
+        var unitPrice = 'RM ' + (parseFloat( (data['spec']['total_price']/data['spec']['quantity']) ).toFixed(2) * orderQuantity);
+        var totalWeight = (parseFloat(data['spec']['total_weight']).toFixed(2) * orderQuantity) + ' kg';
+        var estDelivery = (parseInt(data['item']['min_process_day']) + 1) + ' to ' + (parseInt(data['item']['max_process_day']) + 1) + ' days';
+      }
+
+      $('.total-price').text(totalPrice);
+      $('.unit-price span').text(unitPrice);
+      $('.total-weight span').text(totalWeight);
+      $('.est-delivery span').text(estDelivery);
+
+    })
+    .fail(function() {
+      console.log("ERROR: Fail to update product info.");
+    });
+  }
+  updateSpecData();
+
+  function addCart() {
+    var orderQuantity = parseInt( $('.qty').val() );
+
+    $.post("", {
+      itemID: "<?php echo $item['item_id']; ?>",
+      specsData: specStatus,
+      quantity: orderQuantity
+    })
+    .done(function(data) {
+      var cartQuantity = $('.btn-shopping-cart span').text();
+      var newCartQuantity = parseInt(cartQuantity) + parseInt(orderQuantity);
+
+      // visual increment cart count (cart icon)
+      $('.btn-shopping-cart span').text(newCartQuantity);
+      $('.btn-shopping-cart').addClass('animated bounce');
+      setTimeout(function () {
+        $('.btn-shopping-cart').removeClass('animated bounce');
+      },800);
+
+      if( parseInt(orderQuantity) > 1 ) {
+        var addedMsg = orderQuantity + ' items have been added into shopping cart !';
+      } else {
+        var addedMsg = orderQuantity + ' item has been added into shopping cart !';
+      }
+      if( parseInt(newCartQuantity) > 1 ) {
+        var cartQtyMsg = 'There are totally ' + newCartQuantity + ' items in your shopping cart.';
+      } else {
+        var cartQtyMsg = 'There is ' + newCartQuantity + ' item in your shopping cart.';
+      }
+      $('#modal-body h5').text(addedMsg);
+      $('#modal-body small').text(cartQtyMsg);
+      $('#add-cart-modal').modal();
+
+    })
+    .fail(function(data) {
+      console.log("ERROR: Fail to add cart.");
+
+      // DEBUG
+      var cartQuantity = $('.btn-shopping-cart span').text();
+      var newCartQuantity = parseInt(cartQuantity) + parseInt(orderQuantity);
+
+      // visual increment cart count (cart icon)
+      $('.btn-shopping-cart span').text(newCartQuantity);
+      $('.btn-shopping-cart').addClass('animated bounce');
+      setTimeout(function () {
+        $('.btn-shopping-cart').removeClass('animated bounce');
+      },800);
+
+      if( parseInt(orderQuantity) > 1 ) {
+        var addedMsg = orderQuantity + ' items have been added into shopping cart !';
+      } else {
+        var addedMsg = orderQuantity + ' item has been added into shopping cart !';
+      }
+      if( parseInt(newCartQuantity) > 1 ) {
+        var cartQtyMsg = 'There are totally ' + newCartQuantity + ' items in your shopping cart.';
+      } else {
+        var cartQtyMsg = 'There is ' + newCartQuantity + ' item in your shopping cart.';
+      }
+      $('#modal-body h5').text(addedMsg);
+      $('#modal-body small').text(cartQtyMsg);
+      $('#add-cart-modal').modal();
+    });
+  }
+
+  </script>
+</section>
